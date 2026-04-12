@@ -3,9 +3,12 @@ import faiss
 import numpy as np
 import os
 import json
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Directory where FAISS indexes and chunk lists are persisted
-INDEX_DIR = "indices"
+INDEX_DIR = os.getenv("INDEX_DIR", "indices")
 
 
 class EmbeddingEngine:

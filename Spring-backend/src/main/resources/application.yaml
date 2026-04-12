@@ -1,6 +1,6 @@
 spring:
   config:
-    import: optional:file:.env[.properties], optional:file:rfp/.env[.properties]
+    import: optional:file:.env[.properties], optional:file:Spring-backend/.env[.properties]
   application:
     name: rfp
 
@@ -24,7 +24,7 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: pinchusinghal6@gmail.com
+    username: ${MAIL_USERNAME}
     password: ${MAIL_PASSWORD}
     properties:
       mail:
@@ -49,9 +49,9 @@ app:
     secret: ${JWT_SECRET}
     access-token-expiration: 900000      # 15 minutes in ms
     refresh-token-expiration: 604800000  # 7 days in ms
-  frontend-url: http://localhost:5173
+  frontend-url: ${FRONTEND_URL}
   file:
-    upload-dir: D:/RFP/uploads
+    upload-dir: ${UPLOAD_DIR}
     max-size: 52428800   # 50MB
   ai:
-    base-url: http://localhost:8000
+    base-url: ${AI_BASE_URL}

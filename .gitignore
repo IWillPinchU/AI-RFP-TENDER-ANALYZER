@@ -14,5 +14,5 @@ logs/
 
 # Ignored directories
 uploads/
-rfpp/pdf/
-rfpp/indices/
+Python-Backend/pdf/
+Python-Backend/indices/

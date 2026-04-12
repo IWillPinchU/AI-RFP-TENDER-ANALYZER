@@ -11,6 +11,7 @@ import com.dce.rfp.repository.DocumentComparisonRepository;
 import com.dce.rfp.repository.DocumentRepository;
 import com.dce.rfp.repository.DocumentSummaryRepository;
 import com.dce.rfp.repository.ProposalRepository;
+import com.dce.rfp.repository.DocumentQARepository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,7 @@ public class DocumentService {
     private final ProposalRepository proposalRepository;
     private final DocumentSummaryRepository documentSummaryRepository;
     private final DocumentComparisonRepository comparisonRepository;
+    private final DocumentQARepository documentQARepository;
 
     @Transactional
     public void deleteDocument(UUID documentId, User user) throws IOException {
@@ -60,6 +62,10 @@ public class DocumentService {
         // 3. Delete cached document summary
         documentSummaryRepository.findByDocument(document)
                 .ifPresent(documentSummaryRepository::delete);
+
+        // 3a. Delete cached document Q&A
+        documentQARepository.findByDocument(document)
+                .ifPresent(documentQARepository::delete);
 
         // 4. Delete physical file from disk
         Path filePath = Paths.get(document.getFilePath());

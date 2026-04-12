@@ -1,15 +1,21 @@
 import pickle
 from ml.feature_eng import FeatureEngineer
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+MODELS_DIR = os.getenv("MODELS_DIR", "models")
 
 
 class Predictor:
     def __init__(self):
         self.fe = FeatureEngineer()
 
-        with open("models/risk_model.pkl", "rb") as f:
+        with open(os.path.join(MODELS_DIR, "risk_model.pkl"), "rb") as f:
             self.risk_model = pickle.load(f)
 
-        with open("models/win_model.pkl", "rb") as f:
+        with open(os.path.join(MODELS_DIR, "win_model.pkl"), "rb") as f:
             self.win_model = pickle.load(f)
 
     def predict(self, text):
