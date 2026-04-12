@@ -236,17 +236,24 @@
 .sectionAccordionContent {
   overflow: hidden;
   min-height: 0;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.sectionAccordionOpen .sectionAccordionContent {
+  visibility: visible;
+  opacity: 1;
 }
 
 .sectionAccordionInner {
-  padding: var(--space-4) var(--space-5) var(--space-5);
+  padding: 0 var(--space-5) var(--space-5);
   border-top: 1px solid var(--border-default);
 }
 
 .pointsList {
-
   margin: 0;
-  padding: 0;
+  padding: var(--space-4) 0 0 0;
   list-style-type: none;
   display: flex;
   flex-direction: column;
