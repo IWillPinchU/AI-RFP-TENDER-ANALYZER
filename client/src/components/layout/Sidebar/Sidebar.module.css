@@ -1,0 +1,260 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: var(--sidebar-width);
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: var(--bg-base); /* Match main area when open */
+  border-right: 1px solid var(--border-subtle);
+  padding: var(--space-3);
+  transition: width var(--transition-sidebar), background-color var(--transition-sidebar);
+  z-index: var(--z-sticky);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.collapsed {
+  width: var(--sidebar-collapsed-width);
+  background-color: var(--bg-deep); /* Dark background when collapsed */
+}
+
+/* ── Header ── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2) var(--space-1);
+  margin-bottom: var(--space-1); /* Shifts structural rhythm higher */
+  min-height: 40px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  overflow: hidden;
+}
+
+.logoImage {
+  height: 28px;
+  width: auto;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.logoText {
+  font-family: var(--font-display);
+  font-size: var(--text-body);
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.collapseButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sharp);
+  color: var(--text-muted);
+  flex-shrink: 0;
+  border: none;
+  background: transparent;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.collapseButton:hover {
+  background-color: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+/* Search section removed entirely */
+
+/* ── Navigation ── */
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.sectionLabel {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--text-micro);
+  font-weight: var(--weight-precision);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-ghost);
+  padding: 0 var(--space-3) 6px var(--space-3); /* Shifted icons downward 6px beneath label, maintaining lock */
+  line-height: var(--leading-normal);
+}
+
+.hiddenLabel {
+  visibility: hidden;
+  user-select: none;
+  pointer-events: none;
+}
+
+.navList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2); /* Compact spacing for expanded text view */
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 0 var(--space-3);
+  height: 44px; /* Standardized height across both states to prevent layout shift */
+  font-size: var(--text-caption);
+  font-weight: var(--weight-regular);
+  color: var(--text-secondary);
+  border-radius: var(--radius-subtle);
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast);
+  text-decoration: none;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.navItem:hover {
+  background-color: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.navItem.active {
+  background-color: var(--accent-muted);
+  color: var(--accent-text);
+}
+
+.collapsed .navItem {
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  width: 44px;
+  height: 44px;
+  margin: 0 auto; /* CRITICAL: Centers the icon irrespective of parent flex scaling offset */
+}
+
+.collapsed .navList {
+  gap: var(--space-5); /* Wider 20px vertical rhythm specifically for naked icons */
+}
+
+.collapsed .header {
+  justify-content: center;
+  padding: 0 0 var(--space-2) 0;
+  margin-bottom: var(--space-1);
+  border-bottom: 1px solid var(--border-subtle);
+  width: 100%;
+}
+
+.collapsed .nav {
+  align-items: center;
+}
+
+.collapsed .userSection {
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 0;
+  width: 100%;
+}
+
+.collapsed .bottom {
+  align-items: center;
+}
+
+/* ── Spacer ── */
+.spacer {
+  flex: 1;
+}
+
+/* ── Bottom ── */
+.bottom {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  border-top: 1px solid var(--border-subtle);
+  padding-top: var(--space-3);
+  width: 100%;
+}
+
+
+
+/* ── User ── */
+.userSection {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-1);
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--accent-muted);
+  color: var(--accent-text);
+  font-family: var(--font-display);
+  font-size: var(--text-small);
+  font-weight: var(--weight-medium);
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  flex: 1;
+}
+
+.userName {
+  font-size: var(--text-caption);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.userEmail {
+  font-size: var(--text-micro);
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.logoutButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sharp);
+  color: var(--text-muted);
+  flex-shrink: 0;
+  border: none;
+  background: transparent;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.logoutButton:hover {
+  background-color: var(--color-error-bg);
+  color: var(--color-error-text);
+}

@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+core/__pycache__/
+ml/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyc.*
+*.egg-info/
+dist/
+build/
+
+# Virtual Environment
+.venv/
+venv/
+.env/
+
+# Environment variables
+.env

@@ -1,0 +1,84 @@
+.section {
+  padding: var(--space-12) 0;
+  display: flex;
+  justify-content: center;
+  background-color: var(--bg-deep);
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+  position: relative;
+  z-index: 10;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: var(--space-10);
+}
+
+.title {
+  font-size: var(--text-section);
+  letter-spacing: var(--tracking-tighter);
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-8);
+  position: relative;
+}
+
+.steps::before {
+  content: '';
+  position: absolute;
+  top: 32px;
+  left: 16%;
+  right: 16%;
+  height: 1px;
+  border-top: 2px dashed var(--border-subtle);
+  z-index: 0;
+}
+
+.step {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.iconWrapper {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-full);
+  background-color: var(--bg-deep);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-primary);
+  margin-bottom: var(--space-4);
+  z-index: 2;
+  box-shadow: 0 0 0 10px var(--bg-deep); /* Masks the dashed line behind it */
+}
+
+.stepTitle {
+  font-size: var(--text-title);
+  font-weight: var(--weight-semibold);
+  margin-bottom: var(--space-2);
+}
+
+.stepNumber {
+  color: var(--accent-text);
+}
+
+.stepDesc {
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+}

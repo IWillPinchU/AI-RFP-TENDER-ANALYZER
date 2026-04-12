@@ -1,0 +1,234 @@
+/* ============================================
+   GLOBAL STYLES
+   Reset, fonts, base styles, scrollbar, selection
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import './tokens.css';
+
+/* ── Modern Reset ── */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-body);
+  letter-spacing: var(--tracking-tight);
+  color: var(--text-primary);
+  background-color: var(--bg-deep);
+  min-height: 100vh;
+  transition: background-color var(--transition-base), color var(--transition-base);
+}
+
+/* ── Typography Base ── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-none);
+  color: var(--text-primary);
+}
+
+h1 {
+  font-size: var(--text-display);
+  letter-spacing: var(--tracking-tightest);
+}
+
+h2 {
+  font-size: var(--text-section);
+  letter-spacing: var(--tracking-tighter);
+}
+
+h3 {
+  font-size: var(--text-subhead);
+  letter-spacing: var(--tracking-tighter);
+}
+
+h4 {
+  font-size: var(--text-title);
+  letter-spacing: var(--tracking-normal);
+}
+
+h5 {
+  font-size: var(--text-feature);
+  letter-spacing: var(--tracking-normal);
+}
+
+h6 {
+  font-size: var(--text-body);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-normal);
+}
+
+p {
+  color: var(--text-secondary);
+  line-height: var(--leading-body);
+}
+
+a {
+  color: var(--accent-text);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--accent-hover);
+}
+
+small {
+  font-size: var(--text-small);
+  color: var(--text-muted);
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background-color: var(--bg-card);
+  padding: 2px 6px;
+  border-radius: var(--radius-sharp);
+  border: 1px solid var(--border-subtle);
+}
+
+/* ── Interactive Reset ── */
+button {
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  outline: none;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* ── Focus Styles (Accessibility) ── */
+:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+/* ── Selection ── */
+::selection {
+  background-color: var(--accent-muted);
+  color: var(--text-primary);
+}
+
+/* ── Scrollbar (Thin, Dark) ── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--border-default);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--border-strong);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-default) transparent;
+}
+
+/* ── Root App Container ── */
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Label Utility (uppercase labels per DESIGN.md) ── */
+.label-uppercase {
+  font-family: var(--font-body);
+  font-size: var(--text-micro);
+  font-weight: var(--weight-precision);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  line-height: var(--leading-normal);
+}
+
+/* ── Screen Reader Only ── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ── Global Print Reset ── */
+/* Resets layout so page-specific print containers can use position:absolute
+   relative to the true page origin. Targets semantic elements to avoid
+   fighting CSS Module hashed class names. */
+@media print {
+  html, body, #root {
+    position: static !important;
+    overflow: visible !important;
+    height: auto !important;
+    background: white !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Remove sidebar margin offset */
+  main {
+    margin-left: 0 !important;
+    position: static !important;
+    overflow: visible !important;
+    height: auto !important;
+    background: white !important;
+    padding: 0 !important;
+  }
+
+  /* Remove any overflow scroll containers that trap position:absolute */
+  main > *, main > * > * {
+    position: static !important;
+    overflow: visible !important;
+    height: auto !important;
+  }
+}

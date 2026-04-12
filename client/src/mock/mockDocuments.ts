@@ -1,0 +1,48 @@
+import type { Document } from '@/types/document.types';
+
+export const mockDocuments: Document[] = [
+  {
+    id: 'a1b2c3d4-0001-0000-0000-000000000001',
+    originalFilename: 'RFP_City_Infrastructure_2026.pdf',
+    storedFilename: 'doc_1_stored.pdf',
+    fileType: 'application/pdf',
+    aiStatus: 'INDEXED',
+    chunksIndexed: 34,
+    chatSessionId: null,
+    createdAt: '2026-04-08T10:30:00Z',
+    updatedAt: '2026-04-08T10:32:00Z',
+  },
+  {
+    id: 'a1b2c3d4-0002-0000-0000-000000000002',
+    originalFilename: 'Tender_IT_Services_Q2.pdf',
+    storedFilename: 'doc_2_stored.pdf',
+    fileType: 'application/pdf',
+    aiStatus: 'INDEXED',
+    chunksIndexed: 28,
+    chatSessionId: null,
+    createdAt: '2026-04-07T14:20:00Z',
+    updatedAt: '2026-04-07T14:22:00Z',
+  },
+  {
+    id: 'a1b2c3d4-0003-0000-0000-000000000003',
+    originalFilename: 'Municipal_Water_Supply_RFP.docx',
+    storedFilename: 'doc_3_stored.docx',
+    fileType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    aiStatus: 'PENDING',
+    chunksIndexed: 0,
+    chatSessionId: null,
+    createdAt: '2026-04-10T09:00:00Z',
+    updatedAt: '2026-04-10T09:00:00Z',
+  },
+  {
+    id: 'a1b2c3d4-0004-0000-0000-000000000004',
+    originalFilename: 'Defence_Equipment_Procurement.pdf',
+    storedFilename: 'doc_4_stored.pdf',
+    fileType: 'application/pdf',
+    aiStatus: 'FAILED',
+    chunksIndexed: 0,
+    chatSessionId: null,
+    createdAt: '2026-04-06T16:45:00Z',
+    updatedAt: '2026-04-06T16:47:00Z',
+  },
+];

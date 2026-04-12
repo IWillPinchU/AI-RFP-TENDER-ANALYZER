@@ -1,0 +1,400 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding: var(--space-4) 0 var(--space-12) 0;
+  max-width: 1080px; /* Expanded by ~20% from 900px */
+  margin: 0 auto;
+}
+
+/* Center states (loading, empty) */
+.centerState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  height: 400px;
+  color: var(--text-secondary);
+  text-align: center;
+}
+.centerState p {
+  max-width: 300px;
+  line-height: var(--leading-relaxed);
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+  color: var(--accent-primary);
+}
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+/* Header */
+.headerBox {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-bottom: 1px solid var(--border-default);
+  padding-bottom: var(--space-4);
+}
+.titleGroup h2 {
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  margin: 0 0 var(--space-2) 0;
+  font-weight: var(--weight-normal);
+}
+.titleGroup p {
+  color: var(--text-secondary);
+  margin: 0;
+  font-size: var(--text-small);
+}
+
+.actionGroup {
+  display: flex;
+  gap: var(--space-3);
+}
+.btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-subtle);
+  font-size: var(--text-small);
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+  border: 1px solid var(--border-default);
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  transition: all 0.2s;
+}
+.btn:hover:not(:disabled) {
+  background: var(--border-default);
+}
+.btnPrimary {
+  background: var(--accent-primary);
+  color: white;
+  border: none;
+}
+.btnPrimary:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+/* Custom Gauges (Top Row) */
+.gaugesRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+}
+.gaugeCard {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-comfortable);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+}
+.gaugeHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-micro);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: var(--weight-medium);
+  margin-bottom: var(--space-6);
+}
+/* SVG Gauge container */
+.gaugeBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.gaugeLabels {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-size: var(--text-micro);
+  color: var(--text-tertiary);
+  margin-top: -10px; /* pull up closer to the SVG arc */
+}
+/* Probability Bar container */
+.probBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.probValue {
+  font-family: var(--font-display);
+  font-size: var(--text-h2);
+  color: var(--accent-primary);
+  line-height: 1;
+}
+.probTrack {
+  height: 6px;
+  background: rgba(255,255,255,0.05); /* very dark track */
+  border-radius: 3px;
+  overflow: hidden;
+}
+.probFill {
+  height: 100%;
+  background: var(--accent-primary);
+  border-radius: 3px;
+}
+.probLabels {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-size: var(--text-micro);
+  color: var(--text-tertiary);
+}
+
+/* Overall Recommendation block */
+.sectionTitle {
+  font-size: var(--text-micro);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: var(--weight-medium);
+  margin-bottom: var(--space-3);
+}
+.recommendationCard {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-comfortable);
+  padding: var(--space-5);
+  color: var(--text-primary);
+  line-height: var(--leading-relaxed);
+  font-size: var(--text-body);
+}
+
+/* Blocks */
+.block {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-comfortable);
+  padding: var(--space-5);
+}
+.blockTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-large);
+  margin: 0 0 var(--space-4) 0;
+  font-weight: var(--weight-normal);
+  color: var(--text-primary);
+}
+.blockText {
+  color: #c9ccd1; /* Soft light gray - visible but not eye-burning white */
+  line-height: var(--leading-relaxed);
+}
+
+/* According System */
+.accordionList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+.accordionItem {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-comfortable);
+  /* remove hidden from here since the wrapper handles it */
+}
+.accordionHeader {
+  padding: var(--space-4) var(--space-5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+}
+.accordionTitleGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-display);
+  font-size: var(--text-large);
+  color: var(--text-primary);
+}
+.accordionDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.accordionIcon {
+  color: var(--text-tertiary);
+  transition: transform 0.3s ease;
+}
+.accordionIcon.open {
+  transform: rotate(180deg);
+}
+
+/* CSS Grid Animation */
+.accordionWrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease-in-out;
+}
+.accordionWrapper.open {
+  grid-template-rows: 1fr;
+}
+.accordionContent {
+  overflow: hidden;
+}
+.accordionInnerPadding {
+  padding: 0 var(--space-5) var(--space-5) var(--space-5);
+  border-top: 1px solid var(--border-default);
+  margin-top: 1px;
+}
+
+.catOverview {
+  color: #c9ccd1;
+  line-height: var(--leading-relaxed);
+  padding-top: var(--space-5);
+  margin-bottom: var(--space-6);
+  font-size: var(--text-body, 16px);
+}
+
+/* Single Column Stack for Lists */
+.listsStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  margin-bottom: var(--space-6);
+}
+.colTitle {
+  font-size: var(--text-micro);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: var(--weight-medium);
+  margin-bottom: var(--space-3);
+}
+.ulList {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.liItem {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  color: #c9ccd1; 
+  line-height: var(--leading-relaxed);
+  font-size: var(--text-body, 16px);
+}
+.bulletDash {
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+  font-weight: bold;
+}
+.bulletArrow {
+  color: var(--accent-primary);
+  flex-shrink: 0;
+}
+
+/* Risk Box inside accordion */
+.riskBox {
+  background: rgba(245, 158, 11, 0.05); /* very faint warning tint */
+  border: 1px solid rgba(245, 158, 11, 0.2); /* warning-dark border */
+  border-radius: var(--radius-subtle);
+  padding: var(--space-4);
+}
+.riskTitle {
+  font-size: var(--text-micro);
+  color: var(--color-warning, #f59e0b);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: var(--weight-medium);
+  margin-bottom: var(--space-2);
+}
+.riskText {
+  color: #c9ccd1;
+  line-height: var(--leading-relaxed);
+  font-size: var(--text-body, 16px);
+}
+
+.svgLabel {
+  fill: #c9ccd1;
+}
+
+/* Print Overrides */
+@media print {
+  /* Suppress dark backgrounds from app shell bleeding through */
+  *, *::before, *::after {
+    -webkit-print-color-adjust: economy !important;
+    print-color-adjust: economy !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* Hide everything; global.css has already reset layout positioning */
+  body * { visibility: hidden; }
+
+  /* Collapse the container's scroll wrapper so invisible layout takes zero print space */
+  .container {
+    height: 0 !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+  }
+
+  .container, .container * {
+    visibility: visible;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    max-width: 100% !important;
+    background: white !important;
+    padding: 1cm;
+    margin: 0;
+    border: none;
+    overflow: visible !important;
+  }
+
+  .actionGroup { display: none !important; }
+
+  .gaugeCard, .recommendationCard, .block, .accordionItem, .riskBox {
+    border: 1px solid #ccc !important;
+    background: white !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .sectionTitle, .blockTitle {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+    color: black !important;
+  }
+
+  .titleGroup h2, .gaugeHeader, .sectionTitle, .blockTitle, .accordionTitleGroup {
+    color: black !important;
+  }
+
+  .catOverview, .liItem, .riskText, .blockText, .recommendationCard {
+    color: #1a1a1a !important;
+  }
+
+  .svgLabel { fill: #1a1a1a !important; }
+  .probLabels span { color: #1a1a1a !important; }
+  .gaugeBgArc { stroke: #e5e7eb !important; }
+  .probFill { background: #6366F1 !important; }
+
+  .accordionWrapper { grid-template-rows: 1fr !important; }
+  .accordionInnerPadding { border-top: 1px solid #ccc; }
+  .accordionIcon { display: none; }
+
+  @page { margin: 1cm; }
+}

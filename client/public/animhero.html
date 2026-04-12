@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive 3D Hero Grid</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #000000;
+            /* Runway Black */
+            font-family: 'Inter', sans-serif;
+            color: white;
+            user-select: none;
+        }
+
+        canvas {
+            display: block;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        /* Gradient overlay that blends the bottom edge seamlessly into the page */
+        .bottom-fade {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 35vh;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
+            pointer-events: none;
+            z-index: 5;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="bottom-fade"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script>
+        // --- CONFIGURATION STATE ---
+        const CONFIG = {
+            animationSpeed: 0.7,
+            mouseLift: 2.0,
+            influenceRadius: 7.0,
+            glowIntensity: 0.2
+        };
+
+        // --- SCENE SETUP ---
+        const scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2('#000000', 0.012);
+
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 20, 35);
+        camera.lookAt(0, 0, 0);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.setClearColor('#000000');
+        document.body.appendChild(renderer.domElement);
+
+        // --- LIGHTING ---
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.08);
+        scene.add(ambientLight);
+
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.4);
+        directionalLight.position.set(0, 40, 20);
+        scene.add(directionalLight);
+
+        // Electric Indigo Rim Lights (#6366F1)
+        const rimCenter = new THREE.DirectionalLight(0x6366f1, 2.5);
+        rimCenter.position.set(0, 15, -40);
+        scene.add(rimCenter);
+
+        const rimLeft = new THREE.DirectionalLight(0x6366f1, 1.8);
+        rimLeft.position.set(-50, 15, -30);
+        scene.add(rimLeft);
+
+        const rimRight = new THREE.DirectionalLight(0x6366f1, 1.8);
+        rimRight.position.set(50, 15, -30);
+        scene.add(rimRight);
+
+        const underGlowPositions = [
+            [0, -5, 0],
+            [-35, -5, -35],
+            [35, -5, -35],
+            [-35, -5, 35],
+            [35, -5, 35]
+        ];
+
+        // Lighter Indigo Underglow (#818CF8)
+        underGlowPositions.forEach(pos => {
+            const underLight = new THREE.PointLight(0x818cf8, 3.5, 95);
+            underLight.position.set(pos[0], pos[1], pos[2]);
+            scene.add(underLight);
+        });
+
+        const mouseLight = new THREE.PointLight(0xffffff, 0, 35);
+        mouseLight.position.set(0, 8, 0);
+        scene.add(mouseLight);
+
+        // --- GRID GENERATION ---
+        const blocks = [];
+        const gridSize = 45;
+        const blockSize = 1.8;
+        const gap = 0.35;
+        const totalSize = blockSize + gap;
+        const offset = (gridSize * totalSize) / 2;
+
+        const geometry = new THREE.BoxGeometry(blockSize, blockSize, blockSize);
+        const material = new THREE.MeshStandardMaterial({
+            color: 0x030303,     // Deep token
+            roughness: 0.18,
+            metalness: 0.8,
+            emissive: 0x6366f1,  // Electric Indigo
+            emissiveIntensity: 0.0
+        });
+
+        for (let i = 0; i < gridSize; i++) {
+            for (let j = 0; j < gridSize; j++) {
+                const mesh = new THREE.Mesh(geometry, material.clone());
+                mesh.position.x = (i * totalSize) - offset + (totalSize / 2);
+                mesh.position.z = (j * totalSize) - offset + (totalSize / 2);
+
+                const randomHeight = (Math.random() * Math.random()) * 5;
+
+                // CRITICAL FIX: Start deep underground (-150) so they are hidden by fog
+                // and don't create a "flat layer" on load.
+                mesh.position.y = -150;
+                scene.add(mesh);
+
+                const distanceFromBottom = offset - mesh.position.z;
+
+                blocks.push({
+                    mesh: mesh,
+                    baseY: randomHeight,
+                    baseColor: new THREE.Color(0x030303), // Deep token
+                    targetColor: new THREE.Color(0x030303), // Deep token
+                    randomSpeed: 0.5 + Math.random(),
+                    randomOffset: Math.random() * Math.PI * 2,
+                    entranceDelay: Math.max(0, (distanceFromBottom - (totalSize / 2)) * 0.012),
+                    xIndex: i,
+                    zIndex: j
+                });
+            }
+        }
+
+        // --- MOUSE INTERACTION SETUP ---
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2(-1000, -1000);
+        let mousePoint = new THREE.Vector3(0, 0, 0);
+
+        const planeGeometry = new THREE.PlaneGeometry(1000, 1000);
+        planeGeometry.rotateX(-Math.PI / 2);
+        const invisiblePlane = new THREE.Mesh(planeGeometry, new THREE.MeshBasicMaterial({ visible: false }));
+        scene.add(invisiblePlane);
+
+        window.addEventListener('mousemove', (event) => {
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObject(invisiblePlane);
+            if (intersects.length > 0) {
+                mousePoint.copy(intersects[0].point);
+            }
+        });
+
+        window.addEventListener('touchmove', (event) => {
+            if (event.touches.length > 0) {
+                mouse.x = (event.touches[0].clientX / window.innerWidth) * 2 - 1;
+                mouse.y = -(event.touches[0].clientY / window.innerHeight) * 2 + 1;
+                raycaster.setFromCamera(mouse, camera);
+                const intersects = raycaster.intersectObject(invisiblePlane);
+                if (intersects.length > 0) {
+                    mousePoint.copy(intersects[0].point);
+                }
+            }
+        }, { passive: true });
+
+        document.addEventListener('mouseleave', () => {
+            mouse.x = -1000;
+            mouse.y = -1000;
+        });
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // --- MAIN ANIMATION LOOP ---
+        const clock = new THREE.Clock();
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const elapsedTime = clock.getElapsedTime();
+            const isMouseActive = mouse.x > -1 && mouse.x < 1 && mouse.y > -1 && mouse.y < 1;
+
+            if (isMouseActive) {
+                mouseLight.position.x += (mousePoint.x - mouseLight.position.x) * 0.1;
+                mouseLight.position.z += (mousePoint.z - mouseLight.position.z) * 0.1;
+                mouseLight.intensity += ((CONFIG.glowIntensity * 6) - mouseLight.intensity) * 0.1;
+            } else {
+                mouseLight.intensity += (0 - mouseLight.intensity) * 0.1;
+            }
+
+            const HOVER_COLOR = new THREE.Color(0xa5b4fc); // Indigo-tinted white hover effect
+
+            blocks.forEach((block) => {
+                const noise = Math.sin((elapsedTime * CONFIG.animationSpeed * block.randomSpeed) + block.randomOffset);
+                let targetY = block.baseY + (noise * 0.5);
+                let colorLerpFactor = 0;
+
+                if (isMouseActive) {
+                    const distanceToMouse = Math.sqrt(
+                        (block.mesh.position.x - mousePoint.x) ** 2 +
+                        (block.mesh.position.z - mousePoint.z) ** 2
+                    );
+                    if (distanceToMouse < CONFIG.influenceRadius) {
+                        const normalizedDist = distanceToMouse / CONFIG.influenceRadius;
+                        const influence = 1 - (normalizedDist * normalizedDist);
+                        targetY += influence * CONFIG.mouseLift;
+                        colorLerpFactor = influence * (CONFIG.glowIntensity * 0.4);
+                    }
+                }
+
+                // If before delay, target is still deep in the void
+                if (elapsedTime < block.entranceDelay) {
+                    targetY = -150;
+                }
+
+                // Smooth rise logic
+                block.mesh.position.y += (targetY - block.mesh.position.y) * 0.07;
+                block.targetColor.copy(block.baseColor).lerp(HOVER_COLOR, colorLerpFactor);
+                block.mesh.material.color.lerp(block.targetColor, 0.1);
+            });
+
+            renderer.render(scene, camera);
+        }
+
+        window.onload = () => {
+            animate();
+        };
+    </script>
+</body>
+
+</html>

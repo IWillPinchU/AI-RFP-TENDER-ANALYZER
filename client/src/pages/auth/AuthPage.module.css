@@ -1,0 +1,73 @@
+.container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  font-family: inherit;
+  background-color: var(--color-bg);
+}
+
+/* Divider */
+.divider {
+  display: none;
+  width: 1px;
+  background-color: var(--border-subtle);
+  flex-shrink: 0;
+  align-self: stretch;
+}
+@media (min-width: 1024px) {
+  .divider { display: block; }
+}
+
+/* Right Panel */
+.rightPanel {
+  position: relative;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-bg-elevated);
+  padding: 0 var(--space-8);
+}
+@media (min-width: 1024px) {
+  .rightPanel { width: 38%; }
+}
+
+.homeLink {
+  position: absolute;
+  top: var(--space-6);
+  left: var(--space-6);
+  opacity: 0.6;
+  transition: opacity 0.2s;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--text-primary);
+  text-decoration: none;
+}
+.homeLink:hover {
+  opacity: 1;
+}
+.logoImage {
+  height: 32px;
+}
+
+.formContainer {
+  width: 100%;
+  max-width: 24rem;
+  transition: opacity 280ms ease, transform 280ms ease;
+}
+
+.formClosing {
+  opacity: 0;
+  transform: scale(0.96) translateY(8px);
+}
+.formOpening {
+  opacity: 1;
+  transform: scale(0.97) translateY(-6px);
+}
+.formIdle {
+  opacity: 1;
+  transform: scale(1) translateY(0px);
+}

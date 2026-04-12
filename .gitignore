@@ -1,0 +1,18 @@
+# IDEs and Tools
+.agents/
+.vscode/
+.idea/
+.DS_Store
+
+# Environment Variables
+.env
+.env.*
+
+# Logs
+logs/
+*.log
+
+# Ignored directories
+uploads/
+rfpp/pdf/
+rfpp/indices/

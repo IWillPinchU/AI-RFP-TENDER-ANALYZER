@@ -1,0 +1,104 @@
+.heroSection {
+  position: relative;
+  height: calc(100vh - 80px);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.bottomFade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 35vh;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
+  pointer-events: none;
+  z-index: 5;
+}
+
+.content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 800px;
+  padding: var(--space-12) var(--space-6);
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0) 80%);
+  border-radius: 50%;
+}
+
+.content * {
+  pointer-events: auto;
+}
+
+.badge {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  color: var(--accent-text);
+  border-radius: var(--radius-full);
+  font-size: var(--text-small);
+  font-weight: var(--weight-medium);
+  margin-bottom: var(--space-6);
+  border: 1px solid rgba(99, 102, 241, 0.4);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+}
+
+.badgeDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--accent-primary);
+  box-shadow: 0 0 8px var(--accent-primary);
+}
+
+.title {
+  font-size: 5rem;
+  line-height: 1.1;
+  letter-spacing: var(--tracking-tightest);
+  margin-bottom: var(--space-6);
+  color: #FFFFFF;
+  text-shadow: 0 4px 32px rgba(0, 0, 0, 0.9), 0 2px 4px rgba(0, 0, 0, 1);
+}
+
+.gradientText {
+  background: linear-gradient(135deg, #a5b4fc 0%, #6366f1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  font-size: var(--text-title);
+  color: #F8F9FA;
+  max-width: 600px;
+  margin-bottom: var(--space-8);
+  font-weight: var(--weight-medium);
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.9), 0 2px 4px rgba(0, 0, 0, 1);
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-4);
+}
+
+.ctaButton {
+  min-width: 160px;
+  display: inline-flex;
+  justify-content: center;
+  height: 48px;
+  font-size: var(--text-body);
+}
+
+.actions a {
+  text-decoration: none;
+}
