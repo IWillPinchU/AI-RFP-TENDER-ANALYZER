@@ -1,5 +1,12 @@
 package com.dce.rfp.service;
 
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.dce.rfp.dto.response.ChatMessageResponse;
 import com.dce.rfp.dto.response.ChatSessionResponse;
 import com.dce.rfp.entity.ChatMessage;
@@ -11,13 +18,9 @@ import com.dce.rfp.entity.enums.MessageRole;
 import com.dce.rfp.exception.UserNotFoundException;
 import com.dce.rfp.repository.ChatMessageRepository;
 import com.dce.rfp.repository.ChatSessionRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -30,18 +33,18 @@ public class ChatService {
 
     @Transactional
     public ChatMessageResponse sendMessage(UUID chatSessionId, String query, User user) {
-        // 1. Get chat session
+        
         ChatSession session = chatSessionRepository.findByIdAndUser(chatSessionId, user)
                 .orElseThrow(() -> new UserNotFoundException("Chat session not found"));
 
         Document document = session.getDocument();
 
-        // 2. Verify document is indexed
+        
         if (document.getAiStatus() != AiStatus.INDEXED) {
             throw new IllegalStateException("Document is not yet indexed. Status: " + document.getAiStatus());
         }
 
-        // 3. Save user message
+        
         ChatMessage userMessage = ChatMessage.builder()
                 .chatSession(session)
                 .role(MessageRole.USER)
@@ -49,27 +52,27 @@ public class ChatService {
                 .build();
         chatMessageRepository.save(userMessage);
 
-        // 4. Auto-generate title from first question
+        
         if (session.getTitle() == null || session.getTitle().isBlank() || session.getTitle().equals(document.getOriginalFilename())) {
             String title = query.length() > 50 ? query.substring(0, 50) + "..." : query;
             session.setTitle(title);
         }
 
-        // 5. Call AI service
+        
         Map<String, Object> aiResponse = aiService.queryDocument(document.getAiDocId(), query);
 
-        // Guard: null response means AI service is completely unreachable
+        
         if (aiResponse == null) {
             throw new IllegalStateException("AI service is unreachable. Please ensure the AI service is running.");
         }
-        // Guard: error key means AI returned a handled error (e.g. doc not loaded)
+        
         if (aiResponse.containsKey("error")) {
             throw new IllegalStateException("AI service error: " + aiResponse.get("error"));
         }
 
-        // Parse structured AI response
+        
         Object rawAnswer = aiResponse.get("answer");
-        String contentJson;  // raw JSON to store in DB
+        String contentJson;  
         List<String> mainAnswer = null;
         String conclusion = null;
 
@@ -77,7 +80,7 @@ public class ChatService {
             @SuppressWarnings("unchecked")
             Map<String, Object> answerMap = (Map<String, Object>) rawAnswer;
 
-            // main_answer
+            
             Object mainObj = answerMap.get("main_answer");
             if (mainObj instanceof List) {
                 List<String> points = ((List<?>) mainObj).stream()
@@ -85,19 +88,19 @@ public class ChatService {
                 mainAnswer = points;
             }
 
-            // conclusion
+            
             conclusion = answerMap.containsKey("conclusion")
                     ? String.valueOf(answerMap.get("conclusion")) : null;
         }
 
-        // Store raw JSON in DB
+        
         try {
             contentJson = objectMapper.writeValueAsString(rawAnswer);
         } catch (Exception e) {
             contentJson = String.valueOf(rawAnswer);
         }
 
-        // 6. Save assistant message
+        
         ChatMessage assistantMessage = ChatMessage.builder()
                 .chatSession(session)
                 .role(MessageRole.ASSISTANT)
@@ -107,7 +110,7 @@ public class ChatService {
 
         chatSessionRepository.save(session);
 
-        // 7. Return structured response directly (not from DB mapping)
+        
         return ChatMessageResponse.builder()
                 .id(assistantMessage.getId())
                 .role("ASSISTANT")
@@ -160,7 +163,7 @@ public class ChatService {
         if (msg.getRole() == MessageRole.USER) {
             builder.content(msg.getContent());
         } else {
-            // Parse stored JSON back into structured fields
+            
             try {
                 @SuppressWarnings("unchecked")
                 Map<String, Object> parsed = objectMapper.readValue(msg.getContent(), Map.class);
@@ -175,7 +178,7 @@ public class ChatService {
                     builder.conclusion(String.valueOf(parsed.get("conclusion")));
                 }
             } catch (Exception e) {
-                builder.content(msg.getContent()); // fallback to raw text
+                builder.content(msg.getContent()); 
             }
 
             builder.overallRisk(null);

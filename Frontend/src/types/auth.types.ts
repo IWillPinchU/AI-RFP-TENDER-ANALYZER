@@ -1,4 +1,4 @@
-/* ── Auth Types ── */
+
 
 export interface User {
   id: number;

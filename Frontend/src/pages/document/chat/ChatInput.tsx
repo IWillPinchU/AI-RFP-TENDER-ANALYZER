@@ -30,7 +30,7 @@ export function ChatInput({ onSend, isLoading }: ChatInputProps) {
       onSend(trimmed);
       setValue('');
       if (textareaRef.current) {
-        textareaRef.current.style.height = 'auto'; // Reset height
+        textareaRef.current.style.height = 'auto'; 
       }
     }
   };

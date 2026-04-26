@@ -1,4 +1,4 @@
-/* ── Chat Types ── */
+
 
 export type MessageRole = 'USER' | 'AI';
 

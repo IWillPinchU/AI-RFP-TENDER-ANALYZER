@@ -22,10 +22,7 @@ public class ProposalController {
 
     private final ProposalService proposalService;
 
-    /**
-     * Generate a new proposal for a document.
-     * Body: { documentId, title, sections: ["Executive Summary", "Technical Approach", ...] }
-     */
+    
     @PostMapping("/generate")
     public ResponseEntity<ProposalResponse> generateProposal(
             @Valid @RequestBody GenerateProposalRequest request,
@@ -35,10 +32,7 @@ public class ProposalController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    /**
-     * Get all proposals for a specific document (summary only, no section details).
-     * Query param: documentId
-     */
+    
     @GetMapping
     public ResponseEntity<List<ProposalResponse>> getProposalsByDocument(
             @RequestParam UUID documentId,
@@ -50,9 +44,7 @@ public class ProposalController {
         return ResponseEntity.ok(proposals);
     }
 
-    /**
-     * Get a single proposal with all sections and their points fully populated.
-     */
+    
     @GetMapping("/{proposalId}")
     public ResponseEntity<ProposalResponse> getProposalById(
             @PathVariable UUID proposalId,
@@ -62,9 +54,7 @@ public class ProposalController {
         return ResponseEntity.ok(response);
     }
 
-    /**
-     * Delete a proposal and all its sections.
-     */
+    
     @DeleteMapping("/{proposalId}")
     public ResponseEntity<ApiResponse> deleteProposal(
             @PathVariable UUID proposalId,

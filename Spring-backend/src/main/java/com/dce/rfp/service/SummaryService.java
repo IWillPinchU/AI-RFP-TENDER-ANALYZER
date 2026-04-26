@@ -27,23 +27,20 @@ public class SummaryService {
     private final AIService aiService;
     private final ObjectMapper objectMapper  = new ObjectMapper();
 
-    /**
-     * Generates a new summary for a document via the AI service.
-     * If a summary already exists in the DB, updates it in-place (preserves ID, sets updatedAt).
-     */
+    
     @Transactional
     public DocumentSummaryResponse generateSummary(UUID documentId, User user) throws Exception {
         Document document = documentRepository.findByIdAndUser(documentId, user)
                 .orElseThrow(() -> new UserNotFoundException("Document not found"));
 
-        // Call Python AI service
+        
         Map<String, Object> aiResponse = aiService.summarizeDocument(document.getAiDocId());
 
         if (aiResponse.containsKey("error")) {
             throw new RuntimeException("AI service error: " + aiResponse.get("error"));
         }
 
-        // Extract overview and categories from AI response
+        
         @SuppressWarnings("unchecked")
         Map<String, Object> summaryMap = (Map<String, Object>) aiResponse.get("summary");
         @SuppressWarnings("unchecked")
@@ -51,26 +48,26 @@ public class SummaryService {
         @SuppressWarnings("unchecked")
         Map<String, Object> categoriesMap = (Map<String, Object>) summaryMap.get("categories");
 
-        // Serialize to JSON for DB storage
+        
         String overviewJson = objectMapper.writeValueAsString(overviewMap);
         String categoriesJson = objectMapper.writeValueAsString(categoriesMap);
-        // Estimated risk is ML-computed and returned at the top level (not from the LLM overview)
+        
         String estimatedRisk = aiResponse.containsKey("estimated_risk")
                 ? (String) aiResponse.get("estimated_risk")
                 : (String) overviewMap.getOrDefault("estimated_risk", "Unknown");
 
-        // Extract ML-computed win probability from AI response (top-level, not inside summaryMap)
+        
         Double winProbability = null;
         Object winObj = aiResponse.get("win_probability");
         if (winObj instanceof Number) {
             winProbability = ((Number) winObj).doubleValue();
         }
 
-        // Update existing summary or create new one (avoids unique constraint violation)
+        
         Optional<DocumentSummary> existingSummary = documentSummaryRepository.findByDocument(document);
         DocumentSummary summary;
         if (existingSummary.isPresent()) {
-            // Update in-place — triggers @PreUpdate → updatedAt gets set
+            
             summary = existingSummary.get();
             summary.setOverviewJson(overviewJson);
             summary.setCategoriesJson(categoriesJson);
@@ -91,10 +88,7 @@ public class SummaryService {
         return buildResponse(summary, document, overviewMap, categoriesMap, false);
     }
 
-    /**
-     * Returns the cached summary from DB if it exists.
-     * Returns null if no summary has been generated yet.
-     */
+    
     @Transactional(readOnly = true)
     public DocumentSummaryResponse getSummary(UUID documentId, User user) throws Exception {
         Document document = documentRepository.findByIdAndUser(documentId, user)
@@ -102,12 +96,12 @@ public class SummaryService {
 
         Optional<DocumentSummary> cached = documentSummaryRepository.findByDocument(document);
         if (cached.isEmpty()) {
-            return null;  // frontend checks for null and shows "Generate" button
+            return null;  
         }
 
         DocumentSummary summary = cached.get();
 
-        // Deserialize stored JSON back into maps
+        
         Map<String, Object> overviewMap = objectMapper.readValue(
                 summary.getOverviewJson(), new TypeReference<>() {}
         );
@@ -128,7 +122,7 @@ public class SummaryService {
     }
 
 
-    /** Builds the response DTO, deserializing all nested fields from the AI maps */
+    
     @SuppressWarnings("unchecked")
     private DocumentSummaryResponse buildResponse(
             DocumentSummary summary, Document document,
@@ -136,12 +130,12 @@ public class SummaryService {
             Map<String, Object> categoriesMap,
             boolean cached
     ) {
-        // Pull individual fields from the overview map
+        
         List<String> scopeOfWork = (List<String>) overviewMap.getOrDefault("scope_of_work", List.of());
         List<String> criticalDeadlines = (List<String>) overviewMap.getOrDefault("critical_deadlines", List.of());
         List<String> eligibilityHighlights = (List<String>) overviewMap.getOrDefault("eligibility_highlights", List.of());
 
-        // Cast categories to the expected nested structure
+        
         Map<String, Map<String, Object>> typedCategories = new java.util.HashMap<>();
         if (categoriesMap != null) {
             categoriesMap.forEach((cat, val) -> {

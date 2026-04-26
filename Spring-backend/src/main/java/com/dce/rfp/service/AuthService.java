@@ -37,21 +37,21 @@ public class AuthService {
     private final EmailService emailService;
     private final TotpService totpService;
 
-    // ════════════════════════════════════════════════════════
-    // REGISTER
-    // ════════════════════════════════════════════════════════
+    
+    
+    
     @Transactional
     public String register(RegisterRequest request) {
-        // 1. Check if email already exists
+        
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new UserAlreadyExistsException("Email is already registered");
         }
 
-        // 2. Get the USER role (create if not exists)
+        
         Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
                 .orElseGet(() -> roleRepository.save(new Role(RoleName.ROLE_USER)));
 
-        // 3. Create user (enabled = false until email verification)
+        
         User user = User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
@@ -63,12 +63,12 @@ public class AuthService {
 
         userRepository.save(user);
 
-        // 4. Generate verification token and send email
+        
         String token = UUID.randomUUID().toString();
         VerificationToken verificationToken = VerificationToken.builder()
                 .token(token)
                 .user(user)
-                .expiryDate(Instant.now().plusSeconds(86400)) // 24 hours
+                .expiryDate(Instant.now().plusSeconds(86400)) 
                 .build();
         verificationTokenRepository.save(verificationToken);
 
@@ -77,9 +77,9 @@ public class AuthService {
         return "Registration successful! Please check your email to verify your account.";
     }
 
-    // ════════════════════════════════════════════════════════
-    // VERIFY EMAIL
-    // ════════════════════════════════════════════════════════
+    
+    
+    
     @Transactional
     public String verifyEmail(String token) {
         VerificationToken verificationToken = verificationTokenRepository.findByToken(token)
@@ -99,12 +99,12 @@ public class AuthService {
         return "Email verified successfully! You can now login.";
     }
 
-    // ════════════════════════════════════════════════════════
-    // LOGIN
-    // ════════════════════════════════════════════════════════
+    
+    
+    
     @Transactional
     public AuthResponse login(LoginRequest request) {
-        // 1. Authenticate credentials (Spring Security handles password check + enabled check)
+        
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
@@ -115,7 +115,7 @@ public class AuthService {
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         User user = userDetails.getUser();
 
-        // 2. If 2FA is enabled, return temp token instead of real tokens
+        
         if (user.isTwoFactorEnabled()) {
             String tempToken = jwtService.generateTempToken(userDetails);
             return AuthResponse.builder()
@@ -124,47 +124,47 @@ public class AuthService {
                     .build();
         }
 
-        // 3. No 2FA — issue real tokens
+        
         return generateAuthResponse(userDetails, user);
     }
 
-    // ════════════════════════════════════════════════════════
-    // VERIFY 2FA (Step 2 of login)
-    // ════════════════════════════════════════════════════════
+    
+    
+    
     @Transactional
     public AuthResponse verify2fa(TwoFactorVerifyRequest request) {
-        // 1. Validate the temp token
+        
         if (!jwtService.isTempTokenValid(request.getTempToken())) {
             throw new TwoFactorAuthenticationException("Invalid or expired temporary token. Please login again.");
         }
 
-        // 2. Extract email from temp token
+        
         String email = jwtService.extractUsername(request.getTempToken());
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
 
-        // 3. Verify the TOTP code
+        
         if (!totpService.verifyCode(user.getTwoFactorSecret(), request.getCode())) {
             throw new TwoFactorAuthenticationException("Invalid 2FA code");
         }
 
-        // 4. Issue real tokens
+        
         CustomUserDetails userDetails = new CustomUserDetails(user);
         return generateAuthResponse(userDetails, user);
     }
 
-    // ════════════════════════════════════════════════════════
-    // REFRESH TOKEN
-    // ════════════════════════════════════════════════════════
+    
+    
+    
     @Transactional
     public AuthResponse refreshToken(RefreshTokenRequest request) {
-        // 1. Verify the refresh token
+        
         RefreshToken refreshToken = refreshTokenService.verifyRefreshToken(request.getRefreshToken());
 
-        // 2. Delete old token (rotation)
+        
         refreshTokenService.deleteToken(refreshToken);
 
-        // 3. Issue new access + refresh tokens
+        
         User user = refreshToken.getUser();
         CustomUserDetails userDetails = new CustomUserDetails(user);
 
@@ -178,9 +178,9 @@ public class AuthService {
                 .build();
     }
 
-    // ════════════════════════════════════════════════════════
-    // LOGOUT
-    // ════════════════════════════════════════════════════════
+    
+    
+    
     @Transactional
     public String logout(RefreshTokenRequest request) {
         RefreshToken refreshToken = refreshTokenService.verifyRefreshToken(request.getRefreshToken());
@@ -188,23 +188,23 @@ public class AuthService {
         return "Logged out successfully";
     }
 
-    // ════════════════════════════════════════════════════════
-    // FORGOT PASSWORD
-    // ════════════════════════════════════════════════════════
+    
+    
+    
     @Transactional
     public String forgotPassword(ForgotPasswordRequest request) {
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new UserNotFoundException("No account found with this email"));
 
-        // Delete any existing reset token for this user
+        
         passwordResetTokenRepository.deleteByUser(user);
 
-        // Create new reset token (30 min expiry)
+        
         String token = UUID.randomUUID().toString();
         PasswordResetToken resetToken = PasswordResetToken.builder()
                 .token(token)
                 .user(user)
-                .expiryDate(Instant.now().plusSeconds(1800)) // 30 minutes
+                .expiryDate(Instant.now().plusSeconds(1800)) 
                 .build();
         passwordResetTokenRepository.save(resetToken);
 
@@ -213,9 +213,9 @@ public class AuthService {
         return "Password reset email sent. Check your inbox.";
     }
 
-    // ════════════════════════════════════════════════════════
-    // RESET PASSWORD (using token from email)
-    // ════════════════════════════════════════════════════════
+    
+    
+    
     @Transactional
     public String resetPassword(ResetPasswordRequest request) {
         PasswordResetToken resetToken = passwordResetTokenRepository.findByToken(request.getToken())
@@ -232,17 +232,17 @@ public class AuthService {
 
         passwordResetTokenRepository.delete(resetToken);
 
-        // Invalidate all refresh tokens (force re-login everywhere)
+        
         refreshTokenService.deleteByUser(user);
 
         return "Password has been reset successfully. Please login with your new password.";
     }
 
-    // ════════════════════════════════════════════════════════
-    // UPDATE PASSWORD (logged-in user)
-    // ════════════════════════════════════════════════════════
+    
+    
+    
     public String updatePassword(UpdatePasswordRequest request, User user) {
-        // OAuth users may not have a password set — allow them to set one
+        
         if (user.getPassword() != null) {
             if (request.getCurrentPassword() == null || request.getCurrentPassword().isBlank()) {
                 throw new TwoFactorAuthenticationException("Current password is required");
@@ -255,15 +255,15 @@ public class AuthService {
         user.setPassword(passwordEncoder.encode(request.getNewPassword()));
         userRepository.save(user);
 
-        // Invalidate all refresh tokens
+        
         refreshTokenService.deleteByUser(user);
 
         return "Password updated successfully. Please login again.";
     }
 
-    // ════════════════════════════════════════════════════════
-    // HELPER: Generate full auth response with tokens
-    // ════════════════════════════════════════════════════════
+    
+    
+    
     private AuthResponse generateAuthResponse(CustomUserDetails userDetails, User user) {
         String accessToken = jwtService.generateAccessToken(userDetails);
         RefreshToken refreshToken = refreshTokenService.createRefreshToken(user);
@@ -275,9 +275,9 @@ public class AuthService {
                 .build();
     }
 
-    // ════════════════════════════════════════════════════════
-    // HELPER: Map User entity to UserResponse DTO
-    // ════════════════════════════════════════════════════════
+    
+    
+    
     public UserResponse mapToUserResponse(User user) {
         return UserResponse.builder()
                 .id(user.getId())

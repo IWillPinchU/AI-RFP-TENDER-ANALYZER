@@ -33,7 +33,7 @@ export function ChatInterface({ sessionId }: ChatInterfaceProps) {
   }, [sessionId]);
 
   const handleSendMessage = async (text: string) => {
-    // Optimistically add user message
+    
     const tempUserMsg: ChatMessage = {
       id: Date.now(),
       role: 'USER',

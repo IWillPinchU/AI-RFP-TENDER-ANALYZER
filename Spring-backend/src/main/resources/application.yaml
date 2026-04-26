@@ -9,7 +9,6 @@ spring:
       max-file-size: 50MB
       max-request-size: 50MB
 
-  # ── Database ──────────────────────────────────────────
   datasource:
     url: jdbc:postgresql://localhost:5432/userdb
     username: postgres
@@ -20,7 +19,6 @@ spring:
       ddl-auto: update
     show-sql: false
 
-  # ── Email (Gmail SMTP) ────────────────────────────────
   mail:
     host: smtp.gmail.com
     port: 587
@@ -33,7 +31,7 @@ spring:
           starttls:
             enable: true
 
-  # ── Google OAuth2 (placeholders) ──────────────────────
+  
   security:
     oauth2:
       client:
@@ -43,15 +41,14 @@ spring:
             client-secret: ${GOOGLE_CLIENT_SECRET}
             scope: email, profile
 
-# ── Custom App Properties ─────────────────────────────
 app:
+  frontend-url: ${FRONTEND_URL:http://localhost:5173}
   jwt:
     secret: ${JWT_SECRET}
-    access-token-expiration: 900000      # 15 minutes in ms
-    refresh-token-expiration: 604800000  # 7 days in ms
-  frontend-url: ${FRONTEND_URL}
+    access-token-expiration: 900000      
+    refresh-token-expiration: 604800000  
   file:
     upload-dir: ${UPLOAD_DIR}
-    max-size: 52428800   # 50MB
+    max-size: 52428800   #50MB
   ai:
     base-url: ${AI_BASE_URL}

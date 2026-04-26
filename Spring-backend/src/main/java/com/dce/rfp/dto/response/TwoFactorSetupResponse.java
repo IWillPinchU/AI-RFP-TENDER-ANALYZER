@@ -8,5 +8,5 @@ import lombok.Data;
 public class TwoFactorSetupResponse {
 
     private String secret;
-    private String qrCodeImage;  // base64 encoded PNG
+    private String qrCodeImage;  
 }

@@ -21,7 +21,7 @@ export function ConfirmDialog({
   cancelText = 'Cancel',
 }: ConfirmDialogProps) {
 
-  // Close on Escape key
+  
   useEffect(() => {
     if (!open) return;
     const handleKeyDown = (e: KeyboardEvent) => {

@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-// Lightweight response for listing past comparisons — no full detail needed
+
 @Data
 @Builder
 @NoArgsConstructor

@@ -10,7 +10,7 @@
   grid-template-columns: 289px 1fr 300px;
 }
 
-/* ── Left Panel: Generator ── */
+
 .leftPanel {
   display: flex;
   flex-direction: column;
@@ -140,7 +140,7 @@
   text-align: center;
 }
 
-/* ── Middle Panel: Viewer ── */
+
 .middlePanel {
   display: flex;
   flex-direction: column;
@@ -222,7 +222,7 @@
   transform: rotate(180deg);
 }
 
-/* CSS grid accordion animation */
+
 .sectionAccordion {
   display: grid;
   grid-template-rows: 0fr;
@@ -273,7 +273,7 @@
   font-weight: bold;
 }
 
-/* Empty state in the middle panel */
+
 .emptyViewer {
   display: flex;
   flex-direction: column;
@@ -289,7 +289,7 @@
   line-height: var(--leading-relaxed);
 }
 
-/* ── Right Panel: Sidebar (Proposals History) ── */
+
 .rightPanel {
   display: flex;
   flex-direction: column;
@@ -397,7 +397,7 @@
   line-height: var(--leading-relaxed);
 }
 
-/* ── Shared Buttons ── */
+
 .btn {
   display: flex;
   align-items: center;
@@ -415,7 +415,7 @@
 .btn:hover:not(:disabled) { background: var(--border-default); }
 .btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-/* ── Full-page center states ── */
+
 .centerState {
   display: flex;
   flex-direction: column;
@@ -449,7 +449,7 @@
   color: var(--text-secondary);
 }
 
-/* ── Print Overrides ── */
+
 @media print {
   *, *::before, *::after {
     -webkit-print-color-adjust: economy !important;
@@ -461,7 +461,7 @@
 
   body * { visibility: hidden; }
 
-  /* Collapse the page grid so invisible layout takes zero print space (no blank page 1) */
+  
   .page {
     height: 0 !important;
     min-height: 0 !important;

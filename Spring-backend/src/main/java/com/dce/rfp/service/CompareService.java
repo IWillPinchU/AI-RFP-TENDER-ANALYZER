@@ -30,13 +30,10 @@ public class CompareService {
     private final AIService aiService;
     private final ObjectMapper objectMapper  = new ObjectMapper();
 
-    /**
-     * Runs a new comparison between two documents on a given aspect.
-     * Saves the result to DB and returns the full response.
-     */
+    
     @Transactional
     public CompareResponse runComparison(CompareRequest request, User user) throws Exception {
-        // Verify both documents belong to this user
+        
         Document docA = documentRepository.findByIdAndUser(request.getDocumentIdA(), user)
                 .orElseThrow(() -> new UserNotFoundException("Document A not found"));
         Document docB = documentRepository.findByIdAndUser(request.getDocumentIdB(), user)
@@ -46,7 +43,7 @@ public class CompareService {
             throw new IllegalArgumentException("Cannot compare a document with itself");
         }
 
-        // Call Python AI service
+        
         Map<String, Object> aiResponse = aiService.compareDocuments(
                 docA.getAiDocId(), docB.getAiDocId(),
                 docA.getOriginalFilename(), docB.getOriginalFilename(),
@@ -57,22 +54,22 @@ public class CompareService {
             throw new RuntimeException("AI service error: " + aiResponse.get("error"));
         }
 
-        // Extract comparison result (LLM output) and ML scores (top-level)
+        
         @SuppressWarnings("unchecked")
         Map<String, Object> comparisonMap = (Map<String, Object>) aiResponse.get("comparison");
 
-        // Serialize LLM result for DB storage
+        
         String resultJson = objectMapper.writeValueAsString(comparisonMap);
 
-        // Extract ML-computed risk levels from top-level response
+        
         String riskA = aiResponse.getOrDefault("document_a_risk", "Unknown").toString();
         String riskB = aiResponse.getOrDefault("document_b_risk", "Unknown").toString();
 
-        // Extract ML-computed win probabilities from top-level response
+        
         Double winA = extractDouble(aiResponse, "document_a_win_probability");
         Double winB = extractDouble(aiResponse, "document_b_win_probability");
 
-        // Save to DB
+        
         DocumentComparison saved = DocumentComparison.builder()
                 .user(user)
                 .documentA(docA)
@@ -89,9 +86,7 @@ public class CompareService {
         return buildFullResponse(saved, docA, docB, comparisonMap);
     }
 
-    /**
-     * Returns all past comparisons for this user — summary only (no full detail).
-     */
+    
     @Transactional(readOnly = true)
     public List<ComparisonSummaryResponse> getPastComparisons(User user) {
         return comparisonRepository.findByUserOrderByCreatedAtDesc(user)
@@ -100,15 +95,13 @@ public class CompareService {
                 .toList();
     }
 
-    /**
-     * Returns the full detail of a specific past comparison.
-     */
+    
     @Transactional(readOnly = true)
     public CompareResponse getComparisonById(UUID comparisonId, User user) throws Exception {
         DocumentComparison comparison = comparisonRepository.findByIdAndUser(comparisonId, user)
                 .orElseThrow(() -> new UserNotFoundException("Comparison not found"));
 
-        // Deserialize stored JSON back into a map
+        
         Map<String, Object> comparisonMap = objectMapper.readValue(
                 comparison.getResultJson(), new TypeReference<>() {}
         );
@@ -117,9 +110,7 @@ public class CompareService {
                 comparison.getDocumentB(), comparisonMap);
     }
 
-    /**
-     * Deletes a past comparison record.
-     */
+    
     @Transactional
     public void deleteComparison(UUID comparisonId, User user) {
         DocumentComparison comparison = comparisonRepository.findByIdAndUser(comparisonId, user)
@@ -127,13 +118,13 @@ public class CompareService {
         comparisonRepository.delete(comparison);
     }
 
-    /** Extracts a Double value from a response map safely. */
+    
     private Double extractDouble(Map<String, Object> map, String key) {
         Object val = map.get(key);
         return val instanceof Number ? ((Number) val).doubleValue() : null;
     }
 
-    /** Builds the lightweight summary response for the "Past Comparisons" list */
+    
     private ComparisonSummaryResponse buildSummaryResponse(DocumentComparison c) {
     return ComparisonSummaryResponse.builder()
             .id(c.getId())
@@ -146,15 +137,15 @@ public class CompareService {
             .build();
     }
 
-    /** Builds the full CompareResponse from entity + deserialized AI result map */
+    
     @SuppressWarnings("unchecked")
     private CompareResponse buildFullResponse(DocumentComparison comparison,
                                                Document docA, Document docB,
                                                Map<String, Object> comparisonMap) {
-        // Extract similarities list
+        
         List<String> similarities = (List<String>) comparisonMap.getOrDefault("similarities", List.of());
 
-        // Extract and map differences list to typed DTOs
+        
         List<ComparisonDifferenceItem> differences = new ArrayList<>();
         Object diffsObj = comparisonMap.get("differences");
         if (diffsObj instanceof List<?> diffs) {

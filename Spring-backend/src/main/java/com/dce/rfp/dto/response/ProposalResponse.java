@@ -19,5 +19,5 @@ public class ProposalResponse {
     private UUID documentId;
     private String documentName;
     private LocalDateTime createdAt;
-    private List<ProposalSectionResponse> sections;  // null when listing, populated when fetching single
+    private List<ProposalSectionResponse> sections;  
 }

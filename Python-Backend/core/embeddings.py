@@ -7,20 +7,20 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Directory where FAISS indexes and chunk lists are persisted
+
 INDEX_DIR = os.getenv("INDEX_DIR", "indices")
 
 
 class EmbeddingEngine:
     def __init__(self, model_name="BAAI/bge-small-en-v1.5"):
         self.model = SentenceTransformer(model_name)
-        self.indexes = {}      # doc_id -> faiss.Index (in-memory)
-        self.chunks_map = {}   # doc_id -> list of chunk dicts (in-memory)
+        self.indexes = {}      
+        self.chunks_map = {}   
 
-        # Ensure index directory exists
+        
         os.makedirs(INDEX_DIR, exist_ok=True)
 
-        # On startup — reload all previously saved indexes from disk
+        
         self._reload_all_from_disk()
 
     def _index_path(self, doc_id: str) -> str:
@@ -72,7 +72,7 @@ class EmbeddingEngine:
         self.indexes[doc_id] = index
         self.chunks_map[doc_id] = chunks
 
-        # Persist to disk immediately so it survives restarts
+        
         self._save_to_disk(doc_id)
 
         return len(chunks)
@@ -106,7 +106,7 @@ class EmbeddingEngine:
         self.indexes.pop(doc_id, None)
         self.chunks_map.pop(doc_id, None)
 
-        # Delete persisted files if they exist
+        
         for path in [self._index_path(doc_id), self._chunks_path(doc_id)]:
             try:
                 if os.path.exists(path):

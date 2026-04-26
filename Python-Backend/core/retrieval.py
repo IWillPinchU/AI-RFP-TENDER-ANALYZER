@@ -30,12 +30,12 @@ class RetrievalEngine:
 
     def retrieve(self, query: str, doc_id: str, top_k: int = 5) -> list:
         """Retrieve relevant chunks for a specific doc_id."""
-        # Get more candidates then re-rank
+        
         candidates = self.embedder.search(query, doc_id, top_k=top_k * 2)
 
         intent = self.detect_intent(query)
 
-        # Re-rank with intent boosting
+        
         scored = [(self.score_result(r, intent), r) for r in candidates]
         scored.sort(key=lambda x: x[0], reverse=True)
 

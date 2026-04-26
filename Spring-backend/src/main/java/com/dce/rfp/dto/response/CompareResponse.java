@@ -19,18 +19,18 @@ public class CompareResponse {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    // Document names for display
+    
     private UUID documentIdA;
     private UUID documentIdB;
     private String documentNameA;
     private String documentNameB;
 
-    // The aspect/query this comparison covers
+    
     private String query;
 
-    // Structural comparison data — maps directly to the frontend layout
+    
     private List<String> similarities;
-    private List<ComparisonDifferenceItem> differences;  // feeds the 3-column table
+    private List<ComparisonDifferenceItem> differences;  
     private String documentAAdvantage;
     private String documentBAdvantage;
     private String documentARisk;

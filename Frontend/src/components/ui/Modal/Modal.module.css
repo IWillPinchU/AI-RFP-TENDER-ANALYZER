@@ -21,7 +21,7 @@
   animation: contentIn var(--transition-base);
 }
 
-/* ── Sizes ── */
+
 .sm { width: min(400px, 90vw); }
 .md { width: min(520px, 90vw); }
 .lg { width: min(680px, 90vw); }

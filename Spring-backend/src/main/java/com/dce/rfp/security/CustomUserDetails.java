@@ -30,7 +30,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getEmail();  // We use EMAIL as the principal, not username
+        return user.getEmail();  
     }
 
     @Override
@@ -50,6 +50,6 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return user.isEnabled();  // false until email is verified!
+        return user.isEnabled();  
     }
 }

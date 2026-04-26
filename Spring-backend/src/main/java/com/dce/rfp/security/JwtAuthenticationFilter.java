@@ -30,32 +30,32 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NotNull FilterChain filterChain
     ) throws ServletException, IOException {
 
-        // 1. Get the Authorization header
+        
         final String authHeader = request.getHeader("Authorization");
 
-        // 2. If no header or doesn't start with "Bearer ", skip this filter
+        
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        // 3. Extract the token (everything after "Bearer ")
+        
         final String jwt = authHeader.substring(7);
 
         try {
-            // 4. Extract username (email) from the token
+            
             final String userEmail = jwtService.extractUsername(jwt);
 
-            // 5. If we got a username and user is not already authenticated
+            
             if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-                // 6. Load user from database
+                
                 UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
 
-                // 7. Validate the token
+                
                 if (jwtService.isTokenValid(jwt, userDetails)) {
 
-                    // 8. Create authentication token and set it in the context
+                    
                     UsernamePasswordAuthenticationToken authToken =
                             new UsernamePasswordAuthenticationToken(
                                     userDetails,
@@ -67,10 +67,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
             }
         } catch (Exception e) {
-            // Token is invalid/expired — just don't authenticate (Spring Security will return 401)
+            
         }
 
-        // 9. Continue the filter chain
+        
         filterChain.doFilter(request, response);
     }
 }

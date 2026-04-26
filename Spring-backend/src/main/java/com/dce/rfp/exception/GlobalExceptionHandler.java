@@ -58,7 +58,7 @@ public class GlobalExceptionHandler {
         .body(new ApiResponse(false, "Account not verified. Please check your email."));
   }
 
-  // Handles @Valid validation errors
+  
   @ExceptionHandler(MethodArgumentNotValidException.class)
   public ResponseEntity<Map<String, String>> handleValidationErrors(MethodArgumentNotValidException ex) {
     Map<String, String> errors = new HashMap<>();
@@ -70,21 +70,21 @@ public class GlobalExceptionHandler {
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
   }
 
-  // AI service down or document not indexed
+  
   @ExceptionHandler(IllegalStateException.class)
   public ResponseEntity<ApiResponse> handleIllegalState(IllegalStateException ex) {
     return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
         .body(new ApiResponse(false, ex.getMessage()));
   }
 
-  // Bad request (e.g. comparing doc with itself)
+  
   @ExceptionHandler(IllegalArgumentException.class)
   public ResponseEntity<ApiResponse> handleIllegalArgument(IllegalArgumentException ex) {
     return ResponseEntity.status(HttpStatus.BAD_REQUEST)
         .body(new ApiResponse(false, ex.getMessage()));
   }
 
-  // Catch-all fallback
+  
   @ExceptionHandler(Exception.class)
   public ResponseEntity<ApiResponse> handleGeneral(Exception ex) {
     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

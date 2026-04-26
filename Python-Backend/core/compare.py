@@ -31,7 +31,7 @@ class DocumentComparator:
                 return response.choices[0].message.content
             except Exception as e:
                 if "rate_limit_exceeded" in str(e) or "429" in str(e):
-                    wait = 30 * (attempt + 1)  # 30s, 60s, 90s
+                    wait = 30 * (attempt + 1)  
                     print(f"[LLM] Rate limit hit, waiting {wait}s before retry {attempt + 1}/{retries}...")
                     time.sleep(wait)
                 else:
@@ -41,7 +41,7 @@ class DocumentComparator:
     def _parse_json(self, content: str) -> dict:
         """Strip markdown code fences if present, then parse JSON."""
         content = content.strip()
-        # Remove ```json or ``` at start and ``` at end
+        
         content = re.sub(r'^```(?:json)?\s*', '', content, flags=re.MULTILINE)
         content = re.sub(r'```\s*$', '', content, flags=re.MULTILINE)
         return json.loads(content.strip())

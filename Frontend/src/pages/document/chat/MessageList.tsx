@@ -12,7 +12,7 @@ interface MessageListProps {
 export function MessageList({ messages, isLoading }: MessageListProps) {
   const listRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll to bottom when messages change
+  
   useEffect(() => {
     if (listRef.current) {
       listRef.current.scrollTop = listRef.current.scrollHeight;

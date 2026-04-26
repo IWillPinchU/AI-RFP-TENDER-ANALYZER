@@ -44,13 +44,13 @@ export function AuthPage() {
     if (expectedMode !== mode && phase === 'idle') {
       switchMode(expectedMode);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  
   }, [location.pathname, location.search]);
 
   const formStateClass =
     phase === 'closing' ? styles.formClosing : phase === 'opening' ? styles.formOpening : styles.formIdle;
 
-  // Already logged in — send to dashboard (or wherever they came from)
+  
   const from = (location.state as { from?: Location })?.from?.pathname ?? '/dashboard';
   if (isAuthenticated) {
     return <Navigate to={from} replace />;

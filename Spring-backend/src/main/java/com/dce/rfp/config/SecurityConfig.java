@@ -1,10 +1,8 @@
 package com.dce.rfp.config;
 
-import com.dce.rfp.security.JwtAuthenticationEntryPoint;
-import com.dce.rfp.security.JwtAuthenticationFilter;
-import com.dce.rfp.service.OAuth2AuthenticationSuccessHandler;
+import java.util.List;
 
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,9 +20,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.beans.factory.annotation.Value;
 
-import java.util.List;
+import com.dce.rfp.security.JwtAuthenticationEntryPoint;
+import com.dce.rfp.security.JwtAuthenticationFilter;
+import com.dce.rfp.service.OAuth2AuthenticationSuccessHandler;
+
+import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
@@ -42,13 +43,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            // 1. Disable CSRF — not needed for stateless JWT APIs
+            
             .csrf(csrf -> csrf.disable())
 
-            // 2. Enable CORS
+            
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
 
-            // 3. Define public vs protected endpoints
+            
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
                     "/api/auth/**",
@@ -64,18 +65,18 @@ public class SecurityConfig {
                 .successHandler(oAuth2SuccessHandler)
             )
             
-            // 4. No sessions — every request must carry its own JWT
+            
             .sessionManagement(session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
 
-            // 5. Set our custom authentication provider
+            
             .authenticationProvider(authenticationProvider())
 
-            // 6. Add JWT filter BEFORE Spring's default username/password filter
+            
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
 
-            // 7. Custom 401 response for unauthenticated requests
+            
             .exceptionHandling(ex ->
                 ex.authenticationEntryPoint(jwtEntryPoint)
             );

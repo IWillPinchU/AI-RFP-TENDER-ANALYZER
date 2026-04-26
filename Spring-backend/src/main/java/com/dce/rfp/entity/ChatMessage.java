@@ -28,15 +28,15 @@ public class ChatMessage {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private MessageRole role;  // USER or ASSISTANT
+    private MessageRole role;  
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
     @Column(columnDefinition = "TEXT")
-    private String riskAnalysis;  // from AI (nullable)
+    private String riskAnalysis;  
 
-    private Double winProbability;  // from AI (nullable)
+    private Double winProbability;  
 
     private LocalDateTime createdAt;
 

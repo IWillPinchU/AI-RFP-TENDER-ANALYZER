@@ -9,14 +9,9 @@ import java.util.UUID;
 
 public interface DocumentQARepository extends JpaRepository<DocumentQA, UUID> {
 
-    /**
-     * Finds the cached Q&amp;A record for a given document.
-     * Returns empty if questions have not been generated yet.
-     */
+    
     Optional<DocumentQA> findByDocument(Document document);
 
-    /**
-     * Checks whether questions have already been generated for this document.
-     */
+    
     boolean existsByDocument(Document document);
 }

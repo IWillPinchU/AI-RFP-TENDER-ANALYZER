@@ -83,7 +83,7 @@ export function RegisterForm({
   }
 
   const handleGoogleLogin = () => {
-    const rawEnv = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+    const rawEnv = import.meta.env.VITE_API_URL || 'http:
     const apiBase = rawEnv.replace(/\/api\/?$/, '');
     window.location.href = `${apiBase}/oauth2/authorization/google`;
   };
@@ -195,7 +195,7 @@ function PasswordStrength({ password }: { password: string }) {
 
   return (
     <div style={{ marginTop: '-4px', marginBottom: '12px' }}>
-      {/* Strength bar */}
+      {}
       <div style={{ display: 'flex', gap: '4px', marginBottom: '10px' }}>
         {Array.from({ length: total }).map((_, i) => (
           <div
@@ -211,7 +211,7 @@ function PasswordStrength({ password }: { password: string }) {
         ))}
       </div>
 
-      {/* Rule checklist */}
+      {}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginBottom: '4px' }}>
         {results.map(r => (
           <div key={r.label} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>

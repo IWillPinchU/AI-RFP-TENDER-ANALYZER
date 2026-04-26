@@ -15,6 +15,6 @@ import java.util.UUID;
 public class ProposalSectionResponse {
     private UUID id;
     private String sectionTitle;
-    private List<String> points;   // deserialized from JSON
+    private List<String> points;   
     private Integer orderIndex;
 }

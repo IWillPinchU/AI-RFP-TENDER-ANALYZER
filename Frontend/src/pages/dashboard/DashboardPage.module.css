@@ -27,7 +27,7 @@
   color: var(--text-secondary);
 }
 
-/* Toolbar Layer */
+
 .toolbar {
   display: flex;
   justify-content: space-between;
@@ -126,7 +126,7 @@
   cursor: not-allowed;
 }
 
-/* Document List */
+
 .documentList {
   display: flex;
   flex-direction: column;
@@ -159,7 +159,7 @@
   color: var(--text-muted);
 }
 
-/* Card Row */
+
 .docCard {
   background: var(--surface-base);
   border: 1px solid var(--border-default);
@@ -232,7 +232,7 @@
   gap: var(--space-5);
 }
 
-/* Status Badges */
+
 .statusBadge {
   min-width: 100px;
   display: flex;

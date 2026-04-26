@@ -120,7 +120,7 @@
   cursor: not-allowed;
 }
 
-/* Specific elements for Billing and Security */
+
 .card {
   background: var(--bg-elevated);
   border: 1px solid var(--border-default);
@@ -201,7 +201,7 @@
   to { transform: rotate(360deg); }
 }
 
-/* ── Mini Modal (2FA QR setup) ── */
+
 .miniModalOverlay {
   position: fixed;
   top: 0;

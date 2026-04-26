@@ -31,7 +31,7 @@ public class ChatSession {
     @JoinColumn(name = "document_id", nullable = false)
     private Document document;
 
-    private String title;  // auto-generated from first question
+    private String title;  
 
     @Builder.Default
     @OneToMany(mappedBy = "chatSession", cascade = CascadeType.ALL, orphanRemoval = true)

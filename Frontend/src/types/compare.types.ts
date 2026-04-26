@@ -1,4 +1,4 @@
-/* ── Compare Types ── */
+
 
 export interface ComparisonDifference {
   aspect: string;

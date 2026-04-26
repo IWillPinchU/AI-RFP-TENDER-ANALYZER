@@ -42,13 +42,13 @@ export function DashboardPage() {
     fetchDocuments();
   }, []);
 
-  // Poll for updates if any document is pending
+  
   useEffect(() => {
     const pendingDocs = documents.some(doc => doc.aiStatus === 'PENDING');
     if (!pendingDocs) return;
 
     const timeoutId = setTimeout(() => {
-      fetchDocuments(true); // silent background poll
+      fetchDocuments(true); 
     }, 3000);
 
     return () => clearTimeout(timeoutId);

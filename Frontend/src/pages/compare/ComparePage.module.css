@@ -1,6 +1,6 @@
-/* ── ComparePage Layout ── */
 
-/* ── Top Toolbar ── */
+
+
 .page {
   display: flex;
   flex-direction: column;
@@ -88,7 +88,7 @@
   border-color: rgba(99, 102, 241, 0.4);
 }
 
-/* Animate the wrapper when select expands */
+
 .selectWrap {
   position: relative;
   display: flex;
@@ -204,7 +204,7 @@
   background: rgba(239, 68, 68, 0.05);
 }
 
-/* ── Bottom two-column body ── */
+
 .body {
   display: grid;
   grid-template-columns: 1fr 0px;
@@ -217,7 +217,7 @@
   grid-template-columns: 1fr 300px;
 }
 
-/* ── Content Panel ── */
+
 .contentPanel {
   display: flex;
   flex-direction: column;
@@ -270,7 +270,7 @@
   padding: var(--space-6);
 }
 
-/* ── Sidebar ── */
+
 .sidebar {
   display: flex;
   flex-direction: column;
@@ -381,7 +381,7 @@
   background: rgba(239, 68, 68, 0.08);
 }
 
-/* ── Result Content ── */
+
 .resultContent {
   display: flex;
   flex-direction: column;
@@ -391,7 +391,7 @@
   width: 100%;
 }
 
-/* Gauge cards row */
+
 .gaugesRow {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -496,7 +496,7 @@
   font-weight: bold;
 }
 
-/* Differences table */
+
 .diffTable {
   border: 1px solid var(--border-default);
   border-radius: var(--radius-comfortable);
@@ -553,7 +553,7 @@
 
 .diffDocCell:last-child { border-right: none; }
 
-/* Advantages */
+
 .advantagesRow {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -567,7 +567,7 @@
   margin: 0 0 var(--space-3) 0;
 }
 
-/* ── Shared states ── */
+
 .centerState {
   display: flex;
   flex-direction: column;
@@ -602,7 +602,7 @@
 
 @keyframes spin { 100% { transform: rotate(360deg); } }
 
-/* ── Shared button ── */
+
 .btn {
   display: flex;
   align-items: center;
@@ -628,7 +628,7 @@
 }
 .btnDanger:hover { background: rgba(239, 68, 68, 0.08) !important; }
 
-/* ── Delete modal ── */
+
 .modalBackdrop {
   position: fixed;
   inset: 0;
@@ -672,7 +672,7 @@
   margin-top: var(--space-2);
 }
 
-/* ── Print ── */
+
 @media print {
   *, *::before, *::after {
     -webkit-print-color-adjust: economy !important;
@@ -684,7 +684,7 @@
 
   body * { visibility: hidden; }
 
-  /* Collapse the page so invisible layout takes zero print space (no blank page 1) */
+  
   .page {
     height: 0 !important;
     min-height: 0 !important;

@@ -8,6 +8,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface DocumentSummaryRepository extends JpaRepository<DocumentSummary, UUID> {
-    // Find cached summary for a specific document
+    
     Optional<DocumentSummary> findByDocument(Document document);
 }

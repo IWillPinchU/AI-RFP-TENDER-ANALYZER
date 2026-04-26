@@ -129,10 +129,10 @@ export function ComparePage() {
 
   return (
     <div className={styles.page}>
-      {/* ── Top: Compare Toolbar ── */}
+      {}
       <div className={styles.toolbar}>
         <div className={styles.toolbarInner}>
-          {/* Doc A */}
+          {}
           <div className={styles.pickerGroup}>
             <span className={styles.pickerLabel}>Document A</span>
             <div className={styles.selectWrap}>
@@ -155,7 +155,7 @@ export function ComparePage() {
 
           <GitCompare size={18} className={styles.vsIcon} />
 
-          {/* Doc B */}
+          {}
           <div className={styles.pickerGroup}>
             <span className={styles.pickerLabel}>Document B</span>
             <div className={styles.selectWrap}>
@@ -178,7 +178,7 @@ export function ComparePage() {
 
           <div className={styles.divider} />
 
-          {/* Aspects */}
+          {}
           <div className={styles.aspectsGroup}>
             <span className={styles.pickerLabel}>Compare on</span>
             <div className={styles.chips}>
@@ -213,7 +213,7 @@ export function ComparePage() {
 
           <div className={styles.divider} />
 
-          {/* Run button */}
+          {}
           <button
             id="run-compare-btn"
             className={styles.runBtn}
@@ -233,12 +233,12 @@ export function ComparePage() {
         )}
       </div>
 
-      {/* ── Bottom: two-column layout ── */}
+      {}
       <div className={`${styles.body} ${sidebarOpen ? styles.withSidebar : ''}`}>
 
-        {/* Content column */}
+        {}
         <div className={styles.contentPanel}>
-          {/* Content header */}
+          {}
           <div className={styles.contentHeader}>
             <div className={styles.contentHeaderLeft}>
               {active ? (
@@ -276,7 +276,7 @@ export function ComparePage() {
             </div>
           </div>
 
-          {/* Content body */}
+          {}
           <div className={styles.contentBody}>
             {running ? (
               <div className={styles.centerState}>
@@ -291,13 +291,13 @@ export function ComparePage() {
               </div>
             ) : (
               <div className={styles.resultContent} id="compare-result">
-                {/* Risk Gauge cards */}
+                {}
                 <div className={styles.gaugesRow}>
                   <RiskGauge risk={active.documentARisk} docName={active.documentNameA} />
                   <RiskGauge risk={active.documentBRisk} docName={active.documentNameB} />
                 </div>
 
-                {/* Recommendation */}
+                {}
                 {active.recommendation && (
                   <div className={styles.section}>
                     <p className={styles.sectionLabel}>Recommendation</p>
@@ -307,7 +307,7 @@ export function ComparePage() {
                   </div>
                 )}
 
-                {/* Risk explanation */}
+                {}
                 {active.riskExplanation && (
                   <div className={styles.section}>
                     <p className={styles.sectionLabel}>Risk Analysis</p>
@@ -317,7 +317,7 @@ export function ComparePage() {
                   </div>
                 )}
 
-                {/* Similarities */}
+                {}
                 {active.similarities?.length > 0 && (
                   <div className={styles.section}>
                     <p className={styles.sectionLabel}>Similarities</p>
@@ -334,7 +334,7 @@ export function ComparePage() {
                   </div>
                 )}
 
-                {/* Differences */}
+                {}
                 {active.differences?.length > 0 && (
                   <div className={styles.section}>
                     <p className={styles.sectionLabel}>Differences</p>
@@ -359,7 +359,7 @@ export function ComparePage() {
                   </div>
                 )}
 
-                {/* Advantages */}
+                {}
                 {(active.documentAAdvantages?.length > 0 || active.documentBAdvantages?.length > 0 ||
                   (active as any).documentAAdvantage || (active as any).documentBAdvantage) && (
                   <div className={styles.section}>
@@ -395,7 +395,7 @@ export function ComparePage() {
           </div>
         </div>
 
-        {/* Sidebar: history */}
+        {}
         <div className={styles.sidebar}>
           <div className={styles.sidebarHeader}>
             <div>

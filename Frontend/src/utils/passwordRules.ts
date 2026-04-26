@@ -1,4 +1,4 @@
-/** Shared password validation rules used across auth forms */
+
 
 export interface PasswordRule {
   label: string;

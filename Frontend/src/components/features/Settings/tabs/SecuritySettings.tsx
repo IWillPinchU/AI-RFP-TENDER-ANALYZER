@@ -12,7 +12,7 @@ export function SecuritySettings() {
   const navigate = useNavigate();
   const needsPasswordSetup = !user?.hasPassword;
 
-  // ── Password State ──
+  
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -21,7 +21,7 @@ export function SecuritySettings() {
   const [passwordLoading, setPasswordLoading] = useState(false);
   const [passwordMsg, setPasswordMsg] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
-  // ── 2FA State ──
+  
   const [twoFAEnabled, setTwoFAEnabled] = useState(user?.twoFactorEnabled ?? false);
   const [setupStep, setSetupStep] = useState<'idle' | 'qr' | 'disabling'>('idle');
   const [qrImage, setQrImage] = useState('');
@@ -29,7 +29,7 @@ export function SecuritySettings() {
   const [twoFALoading, setTwoFALoading] = useState(false);
   const [twoFAMsg, setTwoFAMsg] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
-  // ── Update Password ──
+  
   const handleUpdatePassword = async () => {
     setPasswordMsg(null);
 
@@ -46,7 +46,7 @@ export function SecuritySettings() {
     try {
       await userService.updatePassword(currentPassword, newPassword);
       setPasswordMsg({ type: 'success', text: 'Password updated! Logging you out...' });
-      // Tokens are invalidated server-side, auto-logout after a brief delay
+      
       setTimeout(async () => {
         closeSettings();
         await logout();
@@ -59,7 +59,7 @@ export function SecuritySettings() {
     }
   };
 
-  // ── Enable 2FA: Step 1 — get QR code ──
+  
   const handleEnable2FA = async () => {
     setTwoFAMsg(null);
     setTwoFALoading(true);
@@ -74,7 +74,7 @@ export function SecuritySettings() {
     }
   };
 
-  // ── Enable 2FA: Step 2 — verify TOTP code ──
+  
   const handleVerify2FA = async () => {
     setTwoFAMsg(null);
     if (totpCode.length !== 6) {
@@ -95,7 +95,7 @@ export function SecuritySettings() {
     }
   };
 
-  // ── Disable 2FA ──
+  
   const handleDisable2FA = async () => {
     setTwoFAMsg(null);
     if (totpCode.length !== 6) {
@@ -121,7 +121,7 @@ export function SecuritySettings() {
       <h3 className={styles.title}>Security Settings</h3>
       <p className={styles.subtitle}>Manage your account security and authentication methods.</p>
 
-      {/* ── Change Password ── */}
+      {}
       <h4 className={styles.cardTitle} style={{ marginTop: '16px', marginBottom: '16px' }}>
         {needsPasswordSetup ? 'Set Password' : 'Change Password'}
       </h4>
@@ -192,10 +192,10 @@ export function SecuritySettings() {
         </button>
       </div>
 
-      {/* ── Two-Factor Auth ── */}
+      {}
       <h4 className={styles.cardTitle}>Two-Factor Authentication (2FA)</h4>
 
-      {/* Authenticator App Card — idle state */}
+      {}
       {setupStep !== 'disabling' && (
         <div className={styles.card} style={{ marginTop: '8px', marginBottom: '8px' }}>
           <div>
@@ -226,11 +226,11 @@ export function SecuritySettings() {
         </div>
       )}
 
-      {/* Authenticator App Card — disabling state (expanded) */}
+      {}
       {setupStep === 'disabling' && (
         <div className={styles.card} style={{ marginTop: '8px', marginBottom: '8px', flexDirection: 'column', alignItems: 'stretch', gap: '24px' }}>
           
-          {/* Top Row */}
+          {}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
             <div>
               <div className={styles.cardTitle}>Authenticator App</div>
@@ -241,7 +241,7 @@ export function SecuritySettings() {
             </button>
           </div>
           
-          {/* Middle Row: Text and Input */}
+          {}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div className={styles.cardTitle} style={{ margin: 0 }}>
               Enter 6-digit code to confirm
@@ -260,14 +260,14 @@ export function SecuritySettings() {
             </div>
           </div>
           
-          {/* Error/Success Message */}
+          {}
           {twoFAMsg && (
             <div className={twoFAMsg.type === 'success' ? styles.successMsg : styles.errorMsg} style={{ textAlign: 'center', marginTop: '-8px' }}>
               {twoFAMsg.text}
             </div>
           )}
 
-          {/* Bottom Row: Centered Action Buttons */}
+          {}
           <div style={{ display: 'flex', justifyContent: 'center', gap: '12px' }}>
             <button className={styles.dangerButton} onClick={handleDisable2FA} disabled={twoFALoading || totpCode.length !== 6}>
               {twoFALoading ? <Loader2 size={16} className={styles.spinner} /> : 'Confirm Disable'}
@@ -280,14 +280,14 @@ export function SecuritySettings() {
         </div>
       )}
 
-      {/* Idle 2FA success/error message */}
+      {}
       {setupStep === 'idle' && twoFAMsg && (
         <div className={twoFAMsg.type === 'success' ? styles.successMsg : styles.errorMsg} style={{ marginBottom: '16px' }}>
           {twoFAMsg.text}
         </div>
       )}
 
-      {/* ── QR Mini-Modal (centered inside settings modal) ── */}
+      {}
       {setupStep === 'qr' && (
         <div className={styles.miniModalOverlay} onClick={() => { setSetupStep('idle'); setTotpCode(''); setTwoFAMsg(null); }}>
           <div className={styles.miniModal} onClick={(e) => e.stopPropagation()}>

@@ -17,10 +17,10 @@ public class ChatMessageResponse {
     private UUID id;
     private String role;
 
-    // For USER messages — plain text question
+    
     private String content;
 
-    // For ASSISTANT messages — structured AI response
+    
     private List<String> mainAnswer;
     private String conclusion;
     private String overallRisk;

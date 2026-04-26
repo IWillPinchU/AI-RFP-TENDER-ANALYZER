@@ -1,13 +1,13 @@
-/* ── API Base Configuration ── */
+
 
 const envApiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080';
-const BASE_URL = envApiUrl.replace(/\/api\/?$/, ''); // defensively strip /api if cached
+const BASE_URL = envApiUrl.replace(/\/api\/?$/, ''); 
 const API_URL = `${BASE_URL}/api`;
 
 const TOKEN_KEY    = 'rfp_access_token';
 const REFRESH_KEY  = 'rfp_refresh_token';
 
-// ── Helpers ──────────────────────────────────────────────────────────────────
+
 
 function getAccessToken()  { return localStorage.getItem(TOKEN_KEY);   }
 function getRefreshToken() { return localStorage.getItem(REFRESH_KEY); }
@@ -26,12 +26,12 @@ async function parseError(response: Response): Promise<string> {
   }
 }
 
-// ── Token refresh (called automatically on 401) ───────────────────────────
+
 
 let refreshPromise: Promise<string> | null = null;
 
 async function refreshAccessToken(): Promise<string> {
-  // Deduplicate concurrent refresh calls
+  
   if (refreshPromise) return refreshPromise;
 
   refreshPromise = (async () => {
@@ -45,7 +45,7 @@ async function refreshAccessToken(): Promise<string> {
     });
 
     if (!response.ok) {
-      // Refresh failed — force logout
+      
       localStorage.removeItem(TOKEN_KEY);
       localStorage.removeItem(REFRESH_KEY);
       window.location.href = '/login';
@@ -64,11 +64,11 @@ async function refreshAccessToken(): Promise<string> {
   }
 }
 
-// ── Core fetcher ─────────────────────────────────────────────────────────────
+
 
 interface FetchOptions extends RequestInit {
   skipAuth?: boolean;
-  _retry?: boolean; // internal flag to prevent infinite refresh loops
+  _retry?: boolean; 
 }
 
 export async function fetcher<T>(
@@ -89,7 +89,7 @@ export async function fetcher<T>(
 
   const response = await fetch(`${API_URL}${endpoint}`, { headers, ...rest });
 
-  // 401 → refresh token and retry once
+  
   if (response.status === 401 && !skipAuth && !_retry) {
     try {
       const newToken = await refreshAccessToken();
@@ -113,7 +113,7 @@ export async function fetcher<T>(
   return response.json();
 }
 
-// ── Multipart upload ──────────────────────────────────────────────────────────
+
 
 export async function uploadFetcher<T>(endpoint: string, formData: FormData): Promise<T> {
   const token = getAccessToken();

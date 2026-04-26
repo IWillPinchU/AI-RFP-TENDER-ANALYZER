@@ -47,7 +47,7 @@ class DocumentIngestion:
 
         return metadata
 
-# Testing 
+
 if __name__ == "__main__":
     ingestion = DocumentIngestion()
 

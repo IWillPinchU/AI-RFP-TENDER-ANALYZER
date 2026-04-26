@@ -1,12 +1,9 @@
-/* ============================================
-   GLOBAL STYLES
-   Reset, fonts, base styles, scrollbar, selection
-   ============================================ */
+
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 @import './tokens.css';
 
-/* ── Modern Reset ── */
+
 *,
 *::before,
 *::after {
@@ -35,7 +32,7 @@ body {
   transition: background-color var(--transition-base), color var(--transition-base);
 }
 
-/* ── Typography Base ── */
+
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
   font-weight: var(--weight-regular);
@@ -103,7 +100,7 @@ code {
   border: 1px solid var(--border-subtle);
 }
 
-/* ── Interactive Reset ── */
+
 button {
   font-family: inherit;
   font-size: inherit;
@@ -133,19 +130,19 @@ img, svg {
   max-width: 100%;
 }
 
-/* ── Focus Styles (Accessibility) ── */
+
 :focus-visible {
   outline: 2px solid var(--border-focus);
   outline-offset: 2px;
 }
 
-/* ── Selection ── */
+
 ::selection {
   background-color: var(--accent-muted);
   color: var(--text-primary);
 }
 
-/* ── Scrollbar (Thin, Dark) ── */
+
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -164,20 +161,20 @@ img, svg {
   background-color: var(--border-strong);
 }
 
-/* Firefox scrollbar */
+
 * {
   scrollbar-width: thin;
   scrollbar-color: var(--border-default) transparent;
 }
 
-/* ── Root App Container ── */
+
 #root {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-/* ── Label Utility (uppercase labels per DESIGN.md) ── */
+
 .label-uppercase {
   font-family: var(--font-body);
   font-size: var(--text-micro);
@@ -188,7 +185,7 @@ img, svg {
   line-height: var(--leading-normal);
 }
 
-/* ── Screen Reader Only ── */
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -201,10 +198,8 @@ img, svg {
   border-width: 0;
 }
 
-/* ── Global Print Reset ── */
-/* Resets layout so page-specific print containers can use position:absolute
-   relative to the true page origin. Targets semantic elements to avoid
-   fighting CSS Module hashed class names. */
+
+
 @media print {
   html, body, #root {
     position: static !important;
@@ -215,7 +210,7 @@ img, svg {
     padding: 0 !important;
   }
 
-  /* Remove sidebar margin offset */
+  
   main {
     margin-left: 0 !important;
     position: static !important;
@@ -225,7 +220,7 @@ img, svg {
     padding: 0 !important;
   }
 
-  /* Remove any overflow scroll containers that trap position:absolute */
+  
   main > *, main > * > * {
     position: static !important;
     overflow: visible !important;

@@ -70,7 +70,7 @@ export function ResetPasswordPage() {
 
         <div className={`${styles.formContainer} ${styles.formIdle}`}>
           {success ? (
-            /* ── Success State ── */
+            
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: '8px 0', gap: '16px' }}>
               <div style={{
                 width: '60px', height: '60px', borderRadius: '50%',
@@ -99,7 +99,7 @@ export function ResetPasswordPage() {
               </button>
             </div>
           ) : (
-            /* ── Reset Form ── */
+            
             <form onSubmit={handleSubmit}>
               <div className={formStyles.formHeader}>
                 <h1 className={formStyles.formTitle}>Set new password</h1>

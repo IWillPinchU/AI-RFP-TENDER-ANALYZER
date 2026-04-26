@@ -33,7 +33,7 @@ class DocumentSummarizer:
                 return response.choices[0].message.content
             except Exception as e:
                 if "rate_limit_exceeded" in str(e) or "429" in str(e):
-                    wait = 30 * (attempt + 1)  # 30s, 60s, 90s
+                    wait = 30 * (attempt + 1)  
                     print(f"[LLM] Rate limit hit, waiting {wait}s before retry {attempt + 1}/{retries}...")
                     time.sleep(wait)
                 else:
@@ -50,7 +50,7 @@ class DocumentSummarizer:
     def _build_category_context(self, chunks: list) -> str:
         """Combine chunk headings + content into a single context string."""
         context = ""
-        for chunk in chunks[:10]:  # max 10 chunks per category
+        for chunk in chunks[:10]:  
             context += f"{chunk['heading']}:\n{chunk['content'][:800]}\n\n"
         return context.strip()
 
@@ -111,13 +111,13 @@ Rules:
         then generates a final executive overview. Max 7 LLM calls.
         Target output: ~2000 words (~4-5 pages).
         """
-        # Group chunks by category
+        
         by_category = defaultdict(list)
         for chunk in all_chunks:
             cat = chunk.get("category", "General")
             by_category[cat].append(chunk)
 
-        # Summarize all categories in parallel (one thread per category)
+        
         category_summaries = {}
         with ThreadPoolExecutor() as executor:
             future_to_category = {
@@ -129,12 +129,12 @@ Rules:
                 category = future_to_category[future]
                 category_summaries[category] = future.result()
 
-        # Build overview context from category section_overviews
+        
         overview_context = ""
         for cat, summary in category_summaries.items():
             overview_context += f"{cat}: {summary.get('section_overview', '')}\n"
 
-        # Final executive overview — 1 LLM call
+        
         overview_prompt = f"""
 You are writing the executive summary section of a professional tender analysis report.
 

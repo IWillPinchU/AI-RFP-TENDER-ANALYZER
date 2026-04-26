@@ -1,4 +1,4 @@
-/* ── Document Types ── */
+
 
 export type AiStatus = 'PENDING' | 'INDEXED' | 'FAILED';
 

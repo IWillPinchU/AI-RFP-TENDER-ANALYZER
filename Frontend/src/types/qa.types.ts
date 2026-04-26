@@ -1,4 +1,4 @@
-/* ── Q&A Types ── */
+
 
 export interface DocumentQAResponse {
   documentId: string;

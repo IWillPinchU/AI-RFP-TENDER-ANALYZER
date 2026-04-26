@@ -18,7 +18,7 @@ export function BillingSettings() {
       <h3 className={styles.title}>Billing Settings</h3>
       <p className={styles.subtitle}>Manage your subscription plan and payment methods.</p>
 
-      {/* Current Plan */}
+      {}
       <h4 className={styles.cardTitle} style={{ marginTop: '8px' }}>Current Plan</h4>
       <div className={styles.card} style={{ marginTop: '8px', marginBottom: '32px' }}>
         <div>
@@ -28,7 +28,7 @@ export function BillingSettings() {
         <button className={styles.secondaryButton}>Manage Plan</button>
       </div>
 
-      {/* Payment Methods */}
+      {}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
         <h4 className={styles.cardTitle} style={{ margin: 0 }}>Payment Methods</h4>
         <button 

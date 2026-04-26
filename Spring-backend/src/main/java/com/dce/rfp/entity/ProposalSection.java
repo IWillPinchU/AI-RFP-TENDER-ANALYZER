@@ -27,7 +27,7 @@ public class ProposalSection {
     @Column(nullable = false)
     private String sectionTitle;
 
-    // Stores JSON array of points: ["point1", "point2", ...]
+    
     @Column(columnDefinition = "TEXT", nullable = false)
     private String points;
 

@@ -1,7 +1,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 220px); /* contentArea fills remaining viewport below the topBar */
+  height: calc(100vh - 220px); 
   background-color: var(--bg-surface);
   border-radius: var(--radius-comfortable);
   border: 1px solid var(--border-default);

@@ -1,4 +1,4 @@
-/* ── Compare Service ── */
+
 
 import type { DocumentComparison, RunComparisonRequest } from '@/types/compare.types';
 import { fetcher } from './api';

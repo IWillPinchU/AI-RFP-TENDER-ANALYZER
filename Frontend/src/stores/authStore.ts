@@ -41,7 +41,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     try {
       await authService.logout();
     } catch {
-      // Best effort - proceed to clear tokens locally even if backend call fails
+      
     }
     localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem(REFRESH_KEY);

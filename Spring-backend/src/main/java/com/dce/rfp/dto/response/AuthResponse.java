@@ -13,6 +13,6 @@ public class AuthResponse {
     private String refreshToken;
     private final String tokenType = "Bearer";
     private boolean requiresTwoFactor;
-    private String tempToken;  // only set when 2FA is needed
+    private String tempToken;  
     private UserResponse user;
 }

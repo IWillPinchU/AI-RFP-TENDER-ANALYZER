@@ -65,7 +65,7 @@
   color: var(--accent-primary);
   margin-bottom: var(--space-4);
   z-index: 2;
-  box-shadow: 0 0 0 10px var(--bg-deep); /* Masks the dashed line behind it */
+  box-shadow: 0 0 0 10px var(--bg-deep); 
 }
 
 .stepTitle {

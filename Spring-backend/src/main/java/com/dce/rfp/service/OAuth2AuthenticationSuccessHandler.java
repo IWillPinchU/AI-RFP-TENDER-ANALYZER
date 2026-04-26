@@ -1,5 +1,14 @@
 package com.dce.rfp.service;
 
+import java.io.IOException;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.stereotype.Component;
+
 import com.dce.rfp.entity.RefreshToken;
 import com.dce.rfp.entity.Role;
 import com.dce.rfp.entity.User;
@@ -8,16 +17,10 @@ import com.dce.rfp.entity.enums.RoleName;
 import com.dce.rfp.repository.RoleRepository;
 import com.dce.rfp.repository.UserRepository;
 import com.dce.rfp.security.CustomUserDetails;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.stereotype.Component;
-import org.springframework.beans.factory.annotation.Value;
-import java.io.IOException;
-import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
@@ -44,7 +47,7 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
         String lastName = oAuth2User.getAttribute("family_name");
         String googleId = oAuth2User.getAttribute("sub");
 
-        // Find or create user
+        
         User user = userRepository.findByEmail(email)
                 .orElseGet(() -> {
                     Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
@@ -56,19 +59,19 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
                             .email(email)
                             .provider(AuthProvider.GOOGLE)
                             .providerId(googleId)
-                            .enabled(true)  // Google already verified the email
+                            .enabled(true)  
                             .roles(Set.of(userRole))
                             .build();
 
                     return userRepository.save(newUser);
                 });
 
-        // Generate tokens
+        
         CustomUserDetails userDetails = new CustomUserDetails(user);
         String accessToken = jwtService.generateAccessToken(userDetails);
         RefreshToken refreshToken = refreshTokenService.createRefreshToken(user);
 
-        // Redirect to React frontend with tokens
+        
         String redirectUrl = frontendUrl + "/oauth-callback"
         + "?accessToken=" + accessToken
         + "&refreshToken=" + refreshToken.getToken();

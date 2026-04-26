@@ -20,9 +20,9 @@ public class DocumentSummaryResponse {
     private String documentName;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private boolean cached;  // true if loaded from DB, false if freshly generated
+    private boolean cached;  
 
-    // Executive overview fields — deserialized from overviewJson
+    
     private String overview;
     private String tenderPurpose;
     private List<String> scopeOfWork;
@@ -32,8 +32,8 @@ public class DocumentSummaryResponse {
     private Double winProbability;
     private String overallRecommendation;
 
-    // Per-category detailed summaries — deserialized from categoriesJson
-    // Key: category name (Financial, Legal, etc.)
-    // Value: map with section_overview, detailed_analysis, key_points[], etc.
+    
+    
+    
     private Map<String, Map<String, Object>> categories;
 }

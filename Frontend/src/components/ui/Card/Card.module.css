@@ -6,7 +6,7 @@
     border-color var(--transition-fast);
 }
 
-/* ── Variants ── */
+
 .default {
   border: 1px solid var(--border-subtle);
 }
@@ -26,13 +26,13 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* ── Padding ── */
+
 .pad-none { padding: 0; }
 .pad-sm   { padding: var(--space-3); }
 .pad-md   { padding: var(--space-4); }
 .pad-lg   { padding: var(--space-6); }
 
-/* ── Hoverable ── */
+
 .hoverable {
   cursor: pointer;
 }

@@ -3,7 +3,7 @@ import { cn } from '@/utils/cn';
 import logoUrl from '@/assets/logo.png';
 import styles from './AuthSidebar.module.css';
 
-// RFP-focused Wayne AI mock project titles
+
 const floatingCards = [
   { title: 'DoD Multi-Cloud Migration Infrastructure', risk: 'Low' as const, probability: 84 },
   { title: 'Enterprise Cybersecurity Overhaul RFP', risk: 'Medium' as const, probability: 61 },

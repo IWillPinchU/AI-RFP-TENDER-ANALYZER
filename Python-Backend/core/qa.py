@@ -42,7 +42,7 @@ class QuestionGenerator:
                 return response.choices[0].message.content
             except Exception as e:
                 if "rate_limit_exceeded" in str(e) or "429" in str(e):
-                    wait = 30 * (attempt + 1)  # 30s, 60s, 90s
+                    wait = 30 * (attempt + 1)  
                     print(f"[QA] Rate limit hit, waiting {wait}s before retry {attempt + 1}/{retries}...")
                     time.sleep(wait)
                 else:
@@ -78,7 +78,7 @@ class QuestionGenerator:
 
         Returns a flat list of question strings.
         """
-        # Group chunks by their assigned category
+        
         by_category = defaultdict(list)
         for chunk in all_chunks:
             cat = chunk.get("category", "General")
@@ -130,7 +130,7 @@ Rules:
             return [q.strip() for q in questions if q.strip()]
         except Exception as e:
             print(f"[QA] Question generation failed: {type(e).__name__}: {e}")
-            # Return a safe fallback set of generic questions
+            
             return [
                 "What are the eligibility requirements for this tender?",
                 "What is the submission deadline and format?",

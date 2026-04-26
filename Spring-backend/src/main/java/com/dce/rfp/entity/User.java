@@ -32,26 +32,26 @@ public class User {
   @Column(nullable = false, unique = true)
   private String email;
 
-  private String password; // null for Google OAuth users
+  private String password; 
 
   @Builder.Default
   @Column(nullable = false)
-  private boolean enabled = false; // true after email verification
+  private boolean enabled = false; 
 
-  // ── 2FA fields ──
+  
   @Builder.Default
   private boolean twoFactorEnabled = false;
   private String twoFactorSecret;
 
-  // ── OAuth2 fields ──
+  
   @Builder.Default
   @Enumerated(EnumType.STRING)
   @Column(nullable = false)
   private AuthProvider provider = AuthProvider.LOCAL;
 
-  private String providerId; // Google's user ID
+  private String providerId; 
 
-  // ── Roles ──
+  
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
   @Builder.Default

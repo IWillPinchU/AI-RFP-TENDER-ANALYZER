@@ -52,7 +52,7 @@ export function Sidebar() {
 
   return (
     <aside className={cn(styles.sidebar, collapsed && styles.collapsed)}>
-      {/* Header */}
+      {}
       <div className={styles.header}>
         {!collapsed && (
           <div className={styles.logo}>
@@ -69,9 +69,9 @@ export function Sidebar() {
         </button>
       </div>
 
-      {/* Quick Search removed entirely per user request */}
+      {}
 
-      {/* Navigation */}
+      {}
       <nav className={styles.nav}>
         <span className={cn(styles.sectionLabel, collapsed && styles.hiddenLabel)}>Navigation</span>
         <ul className={styles.navList}>
@@ -104,10 +104,10 @@ export function Sidebar() {
         </ul>
       </nav>
 
-      {/* Spacer */}
+      {}
       <div className={styles.spacer} />
 
-      {/* Bottom section */}
+      {}
       <div className={styles.bottom}>
         <ul className={styles.navList}>
           {BOTTOM_ITEMS.map(({ to, label, icon: Icon }) => (
@@ -163,7 +163,7 @@ export function Sidebar() {
 
 
 
-        {/* User profile */}
+        {}
         <div className={styles.userSection}>
           {collapsed ? (
             <Tooltip content="Logout" side="right">

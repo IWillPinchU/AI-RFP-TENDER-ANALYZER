@@ -9,7 +9,7 @@
   flex: 1;
 }
 
-/* ── Navbar ── */
+
 .navbar {
   position: sticky;
   top: 0;
@@ -79,7 +79,7 @@
   gap: var(--space-4);
 }
 
-/* ── Footer ── */
+
 .footer {
   background-color: var(--bg-deep);
   border-top: 1px solid var(--border-subtle);

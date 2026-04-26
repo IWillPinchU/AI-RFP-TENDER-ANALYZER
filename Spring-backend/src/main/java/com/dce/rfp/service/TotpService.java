@@ -16,13 +16,13 @@ import static dev.samstevens.totp.util.Utils.getDataUriForImage;
 @Service
 public class TotpService {
 
-    // Generate a new random secret key
+    
     public String generateSecret() {
         SecretGenerator generator = new DefaultSecretGenerator(32);
         return generator.generate();
     }
 
-    // Generate a QR code image as a base64 data URI
+    
     public String generateQrCodeImage(String secret, String email) {
         QrData data = new QrData.Builder()
                 .label(email)
@@ -42,7 +42,7 @@ public class TotpService {
         }
     }
 
-    // Verify a TOTP code against a secret
+    
     public boolean verifyCode(String secret, String code) {
         TimeProvider timeProvider = new SystemTimeProvider();
         CodeGenerator codeGenerator = new DefaultCodeGenerator();

@@ -19,10 +19,7 @@ public class SummaryController {
 
     private final SummaryService summaryService;
 
-    /**
-     * Generate (or regenerate) a summary for a document.
-     * Takes a few seconds — triggers multiple AI LLM calls.
-     */
+    
     @PostMapping("/generate")
     public ResponseEntity<DocumentSummaryResponse> generateSummary(
             @RequestBody Map<String, UUID> body,
@@ -36,10 +33,7 @@ public class SummaryController {
         return ResponseEntity.ok(response);
     }
 
-    /**
-     * Get the cached summary for a document.
-     * Returns 204 No Content if no summary exists yet.
-     */
+    
     @GetMapping("/{documentId}")
     public ResponseEntity<DocumentSummaryResponse> getSummary(
             @PathVariable UUID documentId,
@@ -47,7 +41,7 @@ public class SummaryController {
     ) throws Exception {
         DocumentSummaryResponse response = summaryService.getSummary(documentId, userDetails.getUser());
         if (response == null) {
-            return ResponseEntity.noContent().build();  // 204 — frontend shows "Generate" button
+            return ResponseEntity.noContent().build();  
         }
         return ResponseEntity.ok(response);
     }

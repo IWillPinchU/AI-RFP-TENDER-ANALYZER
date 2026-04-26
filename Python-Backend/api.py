@@ -18,7 +18,7 @@ summarizer = DocumentSummarizer()
 comparator = DocumentComparator()
 qa_generator = QuestionGenerator()
 
-# Single shared EmbeddingEngine — stores all docs in memory keyed by doc_id
+
 embedder = EmbeddingEngine()
 
 
@@ -58,7 +58,7 @@ def compute_ml_risk_and_win(chunks: list) -> tuple:
         try:
             pred = generator.predictor.predict(chunk["content"])
             risks.append(pred["risk"].lower())
-            wins.append(pred["win_probability"])  # raw 0-100 from win_model
+            wins.append(pred["win_probability"])  
         except Exception:
             pass
 
@@ -157,10 +157,10 @@ def summarize_document(req: SummarizeRequest):
         if not all_chunks:
             return {"error": "No chunks found for this document."}
 
-        # ML models run across ALL chunks for accurate document-level scores
+        
         estimated_risk, win_probability = compute_ml_risk_and_win(all_chunks)
 
-        # LLM generates the textual summary
+        
         result = summarizer.summarize_document(all_chunks)
 
         return {
@@ -185,16 +185,16 @@ def compare_documents(req: CompareRequest):
         if not embedder.is_loaded(req.doc_id_b):
             return {"error": f"Document B '{req.doc_id_b}' not loaded. Call /load first."}
 
-        # Retrieve relevant chunks from both documents for the query
+        
         retriever = RetrievalEngine(embedder)
         chunks_a = retriever.retrieve(req.query, req.doc_id_a, top_k=5)
         chunks_b = retriever.retrieve(req.query, req.doc_id_b, top_k=5)
 
-        # ML models compute risk and win probability from the comparison-relevant chunks
+        
         document_a_risk, document_a_win = compute_ml_risk_and_win(chunks_a)
         document_b_risk, document_b_win = compute_ml_risk_and_win(chunks_b)
 
-        # LLM generates the structural comparison (similarities, differences, advantages, recommendation)
+        
         result = comparator.compare_documents(
             req.query, chunks_a, chunks_b,
             req.doc_name_a, req.doc_name_b

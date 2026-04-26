@@ -1,4 +1,4 @@
-/* ── Proposal Types ── */
+
 
 export interface ProposalSection {
   id: string;

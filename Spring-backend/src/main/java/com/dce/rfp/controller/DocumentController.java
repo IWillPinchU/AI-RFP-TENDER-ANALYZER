@@ -32,7 +32,7 @@ public class DocumentController {
         return ResponseEntity.ok(new ApiResponse(true, "Document deleted successfully"));
     }
 
-    // ── Upload a document ──
+    
     @PostMapping("/upload")
     public ResponseEntity<DocumentResponse> uploadDocument(
             @RequestParam("file") MultipartFile file,
@@ -42,7 +42,7 @@ public class DocumentController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    // ── Get all documents for current user ──
+    
     @GetMapping
     public ResponseEntity<List<DocumentResponse>> getUserDocuments(
             @AuthenticationPrincipal CustomUserDetails userDetails

@@ -24,14 +24,14 @@ export function QAPage() {
   const [isRegenerating, setIsRegenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Selected question
+  
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
 
-  // Answers cache (keyed by question index)
+  
   const [answers, setAnswers] = useState<Record<number, QAAnswerResponse>>({});
   const [isAnalyzing, setIsAnalyzing] = useState(false);
 
-  // ── Load questions on mount ──
+  
   useEffect(() => {
     if (document.aiStatus !== 'INDEXED') {
       setIsLoading(false);
@@ -71,7 +71,7 @@ export function QAPage() {
   async function handleAnalyze() {
     if (selectedIdx === null || !qaData) return;
     const question = qaData.questions[selectedIdx];
-    if (answers[selectedIdx]) return; // already answered
+    if (answers[selectedIdx]) return; 
 
     setIsAnalyzing(true);
     try {
@@ -90,7 +90,7 @@ export function QAPage() {
     const answer = answers[selectedIdx];
     if (!answer) return;
 
-    // Build plain text content
+    
     let content = `Q&A Export — ${document.originalFilename}\n`;
     content += `${'═'.repeat(60)}\n\n`;
     content += `QUESTION:\n${question}\n\n`;
@@ -109,7 +109,7 @@ export function QAPage() {
     URL.revokeObjectURL(url);
   }
 
-  // ── Guard states ──
+  
   if (document.aiStatus !== 'INDEXED') {
     return (
       <div className={styles.centerState}>
@@ -157,7 +157,7 @@ export function QAPage() {
 
   return (
     <div className={styles.page}>
-      {/* ── Left Panel: Questions ── */}
+      {}
       <div className={styles.leftPanel}>
         <div className={styles.panelHeader}>
           <span className={styles.panelTitle}>Questions</span>
@@ -186,9 +186,9 @@ export function QAPage() {
         </div>
       </div>
 
-      {/* ── Right Panel: Answer ── */}
+      {}
       <div className={styles.rightPanel}>
-        {/* Action Bar */}
+        {}
         <div className={styles.answerHeader}>
           <span style={{ color: 'var(--text-secondary)', fontSize: 'var(--text-small)' }}>
             {selectedIdx !== null
@@ -217,7 +217,7 @@ export function QAPage() {
           </div>
         </div>
 
-        {/* Answer Body */}
+        {}
         <div className={styles.answerBody}>
           {selectedIdx === null ? (
             <div className={styles.emptyState}>

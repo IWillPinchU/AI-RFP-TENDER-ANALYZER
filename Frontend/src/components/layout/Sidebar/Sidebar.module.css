@@ -6,7 +6,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  background-color: var(--bg-base); /* Match main area when open */
+  background-color: var(--bg-base); 
   border-right: 1px solid var(--border-subtle);
   padding: var(--space-3);
   transition: width var(--transition-sidebar), background-color var(--transition-sidebar);
@@ -17,16 +17,16 @@
 
 .collapsed {
   width: var(--sidebar-collapsed-width);
-  background-color: var(--bg-deep); /* Dark background when collapsed */
+  background-color: var(--bg-deep); 
 }
 
-/* ── Header ── */
+
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: var(--space-2) var(--space-1);
-  margin-bottom: var(--space-1); /* Shifts structural rhythm higher */
+  margin-bottom: var(--space-1); 
   min-height: 40px;
 }
 
@@ -73,9 +73,9 @@
   color: var(--text-primary);
 }
 
-/* Search section removed entirely */
 
-/* ── Navigation ── */
+
+
 .nav {
   display: flex;
   flex-direction: column;
@@ -90,7 +90,7 @@
   letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
   color: var(--text-ghost);
-  padding: 0 var(--space-3) 6px var(--space-3); /* Shifted icons downward 6px beneath label, maintaining lock */
+  padding: 0 var(--space-3) 6px var(--space-3); 
   line-height: var(--leading-normal);
 }
 
@@ -103,7 +103,7 @@
 .navList {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2); /* Compact spacing for expanded text view */
+  gap: var(--space-2); 
   padding: 0;
   margin: 0;
   list-style: none;
@@ -114,7 +114,7 @@
   align-items: center;
   gap: var(--space-3);
   padding: 0 var(--space-3);
-  height: 44px; /* Standardized height across both states to prevent layout shift */
+  height: 44px; 
   font-size: var(--text-caption);
   font-weight: var(--weight-regular);
   color: var(--text-secondary);
@@ -143,11 +143,11 @@
   padding: 0;
   width: 44px;
   height: 44px;
-  margin: 0 auto; /* CRITICAL: Centers the icon irrespective of parent flex scaling offset */
+  margin: 0 auto; 
 }
 
 .collapsed .navList {
-  gap: var(--space-5); /* Wider 20px vertical rhythm specifically for naked icons */
+  gap: var(--space-5); 
 }
 
 .collapsed .header {
@@ -174,12 +174,12 @@
   align-items: center;
 }
 
-/* ── Spacer ── */
+
 .spacer {
   flex: 1;
 }
 
-/* ── Bottom ── */
+
 .bottom {
   display: flex;
   flex-direction: column;
@@ -191,7 +191,7 @@
 
 
 
-/* ── User ── */
+
 .userSection {
   display: flex;
   align-items: center;

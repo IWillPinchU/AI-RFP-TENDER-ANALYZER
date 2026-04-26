@@ -1,13 +1,13 @@
 .page {
   display: grid;
   grid-template-columns: 340px 1fr;
-  /* Fixed viewport height minus headers (~180px for app bar + doc topbar) */
+  
   height: calc(100vh - 180px);
   margin: calc(-1 * var(--space-6)) calc(-1 * var(--space-5));
   overflow: hidden;
 }
 
-/* ── Left Panel: Questions List ── */
+
 .leftPanel {
   display: flex;
   flex-direction: column;
@@ -109,7 +109,7 @@
   flex: 1;
 }
 
-/* ── Right Panel: Answer View ── */
+
 .rightPanel {
   display: flex;
   flex-direction: column;
@@ -172,7 +172,7 @@
   padding: var(--space-6);
 }
 
-/* Empty / loading states */
+
 .emptyState {
   display: flex;
   flex-direction: column;
@@ -219,7 +219,7 @@
   color: var(--text-tertiary);
 }
 
-/* Full-page center states for initial load / generation */
+
 .centerState {
   display: flex;
   flex-direction: column;
@@ -261,7 +261,7 @@
   background: var(--accent-hover);
 }
 
-/* ── Answer Content Cards ── */
+
 .selectedQuestion {
   font-family: var(--font-display);
   font-size: var(--text-h3);
@@ -321,7 +321,7 @@
   font-size: var(--text-body);
 }
 
-/* ── Print Overrides ── */
+
 @media print {
   * {
     -webkit-print-color-adjust: exact !important;

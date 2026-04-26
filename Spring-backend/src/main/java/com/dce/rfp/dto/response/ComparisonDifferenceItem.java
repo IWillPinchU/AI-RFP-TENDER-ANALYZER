@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-// Represents one row in the differences table: Aspect | Doc A says | Doc B says
+
 @Data
 @Builder
 @NoArgsConstructor

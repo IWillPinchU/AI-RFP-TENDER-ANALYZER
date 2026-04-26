@@ -1,19 +1,27 @@
 package com.dce.rfp.controller;
 
+import java.util.List;
+import java.util.UUID;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.dce.rfp.dto.request.CompareRequest;
 import com.dce.rfp.dto.response.CompareResponse;
 import com.dce.rfp.dto.response.ComparisonSummaryResponse;
 import com.dce.rfp.security.CustomUserDetails;
 import com.dce.rfp.service.CompareService;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/compare")
@@ -22,10 +30,7 @@ public class CompareController {
 
     private final CompareService compareService;
 
-    /**
-     * Run a new comparison between two documents on a specific aspect.
-     * Both documents must be INDEXED and belong to the authenticated user.
-     */
+    
     @PostMapping("/run")
     public ResponseEntity<CompareResponse> runComparison(
             @Valid @RequestBody CompareRequest request,
@@ -35,9 +40,7 @@ public class CompareController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    /**
-     * Returns all past comparisons for this user — summary view for the list.
-     */
+    
     @GetMapping
     public ResponseEntity<List<ComparisonSummaryResponse>> getPastComparisons(
             @AuthenticationPrincipal CustomUserDetails userDetails
@@ -46,9 +49,7 @@ public class CompareController {
         return ResponseEntity.ok(comparisons);
     }
 
-    /**
-     * Returns the full detail of a specific past comparison by ID.
-     */
+    
     @GetMapping("/{comparisonId}")
     public ResponseEntity<CompareResponse> getComparisonById(
             @PathVariable UUID comparisonId,
@@ -58,9 +59,7 @@ public class CompareController {
         return ResponseEntity.ok(response);
     }
 
-    /**
-     * Deletes a past comparison from the user's history.
-     */
+    
     @DeleteMapping("/{comparisonId}")
     public ResponseEntity<Void> deleteComparison(
             @PathVariable UUID comparisonId,

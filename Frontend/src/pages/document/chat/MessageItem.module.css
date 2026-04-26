@@ -1,4 +1,4 @@
-/* Chat Item Styles */
+
 .itemContainer {
   display: flex;
   flex-direction: column;
@@ -14,9 +14,9 @@
   align-items: flex-start;
 }
 
-/* Shared bubble — both sides use the same gray card */
+
 .bubble {
-  max-width: 55%; /* Adjusted down to force text wrapping earlier */
+  max-width: 55%; 
   padding: var(--space-3) var(--space-4);
   border-radius: var(--radius-comfortable);
   background-color: var(--bg-elevated);
@@ -34,7 +34,7 @@
   border-left: 2px solid var(--accent-primary);
 }
 
-/* AI label row — sits inside the box, compact */
+
 .header {
   display: flex;
   align-items: center;
@@ -70,7 +70,7 @@
   display: flex;
   align-items: flex-start;
   gap: var(--space-2);
-  font-size: var(--text-body); /* Match user text size */
+  font-size: var(--text-body); 
   line-height: var(--leading-relaxed);
   color: var(--text-primary);
 }
@@ -88,7 +88,7 @@
   padding-top: var(--space-2);
   border-top: 1px solid var(--border-subtle);
   color: var(--text-secondary);
-  font-size: var(--text-body); /* Match user text size */
+  font-size: var(--text-body); 
 }
 
 .metadata {

@@ -7,7 +7,7 @@
   background-color: var(--color-bg);
 }
 
-/* Divider */
+
 .divider {
   display: none;
   width: 1px;
@@ -19,7 +19,7 @@
   .divider { display: block; }
 }
 
-/* Right Panel */
+
 .rightPanel {
   position: relative;
   display: flex;

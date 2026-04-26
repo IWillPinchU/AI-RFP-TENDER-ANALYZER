@@ -85,7 +85,7 @@ export function ProposalPage() {
       });
       setSuccessMsg(`"${result.title}" generated!`);
       setActiveProposal(result);
-      // Default all sections open for freshly generated proposal
+      
       const defaultOpen: Record<string, boolean> = {};
       result.sections?.forEach((s, i) => { defaultOpen[s.id ?? String(i)] = true; });
       setOpenSections(defaultOpen);
@@ -105,7 +105,7 @@ export function ProposalPage() {
     try {
       const full = await proposalService.getProposal(proposalId);
       setActiveProposal(full);
-      // Default all sections open when loading from history
+      
       const defaultOpen: Record<string, boolean> = {};
       full.sections?.forEach((s, i) => { defaultOpen[s.id ?? String(i)] = true; });
       setOpenSections(defaultOpen);
@@ -154,7 +154,7 @@ export function ProposalPage() {
   return (
     <>
       <div className={`${styles.page} ${sidebarOpen ? styles.withSidebar : ''}`}>
-        {/* ═══ LEFT: Generator ═══ */}
+        {}
         <div className={styles.leftPanel}>
           <div className={styles.panelHeader}>
             <h3 className={styles.panelTitle}>New Proposal</h3>
@@ -214,7 +214,7 @@ export function ProposalPage() {
         </div>
 
         <div className={styles.middlePanel}>
-          {/* Header bar — ALWAYS visible, toggle always in same spot */}
+          {}
           <div className={styles.viewerHeader}>
             <div className={styles.viewerTitleGroup}>
               {activeProposal ? (
@@ -244,7 +244,7 @@ export function ProposalPage() {
             </div>
           </div>
 
-          {/* Body — swaps between states */}
+          {}
           <div className={styles.viewerBody}>
             {isLoadingViewer ? (
               <div className={styles.loadingViewer}>
@@ -301,7 +301,7 @@ export function ProposalPage() {
           </div>
         </div>
 
-        {/* ═══ RIGHT: Sidebar (always rendered, animated via grid) ═══ */}
+        {}
         <div className={styles.rightPanel}>
           <div className={styles.sidebarHeader}>
             <div>

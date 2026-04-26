@@ -30,14 +30,14 @@ public class Document {
     private String originalFilename;
 
     @Column(nullable = false)
-    private String filePath;  // absolute path on disk
+    private String filePath;  
 
-    private Long fileSize;  // bytes
+    private Long fileSize;  
 
-    private String fileType;  // pdf, docx, etc.
+    private String fileType;  
 
     @Column(nullable = false, unique = true)
-    private String aiDocId;  // doc_id used with Python AI service
+    private String aiDocId;  
 
     @Builder.Default
     @Enumerated(EnumType.STRING)

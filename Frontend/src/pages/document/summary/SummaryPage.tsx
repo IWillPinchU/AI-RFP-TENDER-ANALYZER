@@ -6,7 +6,7 @@ import type { DocumentSummaryResponse } from '@/types/summary.types';
 import { summaryService } from '@/services/summaryService';
 import styles from './SummaryPage.module.css';
 
-// Survives component remounts — stores in-flight generation promises keyed by documentId
+
 const pendingGenerations = new Map<string, Promise<DocumentSummaryResponse>>();
 
 interface OutletContext {
@@ -27,7 +27,7 @@ function RiskGauge({ risk }: { risk: 'Low' | 'Medium' | 'High' }) {
                 risk === 'Medium' ? 'var(--color-warning, #f59e0b)' : 
                 'var(--color-error, #ef4444)';
   
-  // Calculate stroke dash array for a half circle
+  
   const strokeWidth = 14;
   const radius = 60;
   const dashArray = Math.PI * radius;
@@ -39,7 +39,7 @@ function RiskGauge({ risk }: { risk: 'Low' | 'Medium' | 'High' }) {
       </div>
       <div className={styles.gaugeBody} style={{ marginTop: 'auto', marginBottom: 'auto' }}>
         <svg viewBox="0 0 160 100" width="100%" height="auto" style={{ maxWidth: '220px', display: 'block', margin: '0 auto' }}>
-          {/* Background Arc */}
+          {}
           <path 
             className={styles.gaugeBgArc}
             d="M 20 70 A 60 60 0 0 1 140 70" 
@@ -47,7 +47,7 @@ function RiskGauge({ risk }: { risk: 'Low' | 'Medium' | 'High' }) {
             strokeWidth={strokeWidth} 
             strokeLinecap="round" 
           />
-          {/* Colored Arc */}
+          {}
           <path 
             d="M 20 70 A 60 60 0 0 1 140 70" 
             fill="none" 
@@ -68,7 +68,7 @@ function RiskGauge({ risk }: { risk: 'Low' | 'Medium' | 'High' }) {
           >
             {risk}
           </text>
-          {/* Internal Labels correctly stationed under the arc bounds */}
+          {}
           <text x="20" y="95" textAnchor="middle" className={styles.svgLabel} fontSize="11">Low</text>
           <text x="80" y="95" textAnchor="middle" className={styles.svgLabel} fontSize="11">Medium</text>
           <text x="140" y="95" textAnchor="middle" className={styles.svgLabel} fontSize="11">High</text>
@@ -104,7 +104,7 @@ export function SummaryPage() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
   
-  // Accordion state - allows multiple to be open
+  
   const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
@@ -113,8 +113,8 @@ export function SummaryPage() {
       return;
     }
 
-    // If a generation is already in-flight for this document (user navigated away
-    // mid-generation), reattach to the existing promise instead of loading stale data.
+    
+    
     const pending = pendingGenerations.get(document.id);
     if (pending) {
       setIsGenerating(true);
@@ -147,7 +147,7 @@ export function SummaryPage() {
   const handleGenerate = async () => {
     setIsGenerating(true);
     setError(null);
-    setSummary(null); // clear stale summary immediately
+    setSummary(null); 
     try {
       const promise = summaryService.generateSummary(document.id);
       pendingGenerations.set(document.id, promise);
@@ -224,7 +224,7 @@ export function SummaryPage() {
 
   return (
     <div className={styles.container}>
-      {/* ── Header ── */}
+      {}
       <div className={styles.headerBox}>
         <div className={styles.titleGroup}>
           <h2>Executive Summary</h2>
@@ -240,13 +240,13 @@ export function SummaryPage() {
         </div>
       </div>
 
-      {/* ── Custom SVG Gauges ── */}
+      {}
       <div className={styles.gaugesRow}>
         <RiskGauge risk={summary.estimatedRisk} />
         <ProbabilityBar probability={summary.winProbability} />
       </div>
 
-      {/* ── Overall Recommendation ── */}
+      {}
       <div>
         <div className={styles.sectionTitle}>OVERALL RECOMMENDATION</div>
         <div className={styles.recommendationCard}>
@@ -254,7 +254,7 @@ export function SummaryPage() {
         </div>
       </div>
 
-      {/* ── Executive Overview ── */}
+      {}
       <div>
         <div className={styles.sectionTitle}>EXECUTIVE OVERVIEW</div>
         <div className={styles.block}>
@@ -267,7 +267,7 @@ export function SummaryPage() {
         </div>
       </div>
 
-      {/* ── Scopes & Limitations ── */}
+      {}
       <div style={{ marginTop: 'var(--space-6)' }}>
         <div className={styles.sectionTitle}>SCOPE & LIMITATIONS</div>
         <div className={styles.block}>
@@ -296,17 +296,17 @@ export function SummaryPage() {
         </div>
       </div>
 
-      {/* ── Category Accordions ── */}
+      {}
       <div>
         <div className={styles.sectionTitle}>CATEGORY ANALYSIS</div>
         <div className={styles.accordionList}>
           {Object.entries(summary.categories || {}).map(([catName, details]) => {
             const isOpen = openCategories[catName] || false;
-            const dotColor = DOT_COLORS[catName] || '#767d88'; // fallback dot color
+            const dotColor = DOT_COLORS[catName] || '#767d88'; 
 
             return (
               <div key={catName} className={styles.accordionItem}>
-                {/* Header (Always Visible) */}
+                {}
                 <div 
                   className={styles.accordionHeader} 
                   onClick={() => toggleCategory(catName)}
@@ -318,11 +318,11 @@ export function SummaryPage() {
                   <ChevronDown size={20} className={`${styles.accordionIcon} ${isOpen ? styles.open : ''}`} />
                 </div>
 
-                {/* Content (Expanded with CSS Transition) */}
+                {}
                 <div className={`${styles.accordionWrapper} ${isOpen ? styles.open : ''}`}>
                   <div className={styles.accordionContent}>
                     <div className={styles.accordionInnerPadding}>
-                      {/* Intro paragraph */}
+                      {}
                     <div className={styles.catOverview}>
                       {details.section_overview}
                       {details.detailed_analysis && (
@@ -332,9 +332,9 @@ export function SummaryPage() {
                       )}
                     </div>
 
-                    {/* Vertical Stack for Lists */}
+                    {}
                     <div className={styles.listsStack}>
-                      {/* Top Column: Key Points */}
+                      {}
                       <div>
                         {details.key_points && details.key_points.length > 0 && (
                           <>
@@ -351,7 +351,7 @@ export function SummaryPage() {
                         )}
                       </div>
 
-                      {/* Bottom Column: Action Items */}
+                      {}
                       <div>
                         {details.action_items && details.action_items.length > 0 && (
                           <>
@@ -369,7 +369,7 @@ export function SummaryPage() {
                       </div>
                     </div>
 
-                    {/* Bottom: Risks Box */}
+                    {}
                     {details.risks_and_considerations && (
                       <div className={styles.riskBox}>
                         <div className={styles.riskTitle}>RISKS & CONSIDERATIONS</div>

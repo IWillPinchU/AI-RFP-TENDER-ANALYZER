@@ -16,5 +16,5 @@ public class CompareRequest {
     private UUID documentIdB;
 
     @NotBlank(message = "Comparison aspect is required")
-    private String query;  // e.g. "Eligibility Criteria" or custom text
+    private String query;  
 }

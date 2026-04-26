@@ -20,10 +20,7 @@ public class QAController {
 
     private final QAService qaService;
 
-    /**
-     * Returns cached Q&amp;A questions for the document, generating and caching them
-     * on first call. Subsequent calls return the cached version instantly.
-     */
+    
     @GetMapping("/{documentId}")
     public ResponseEntity<DocumentQAResponse> getOrGenerateQuestions(
             @PathVariable UUID documentId,
@@ -32,10 +29,7 @@ public class QAController {
         return ResponseEntity.ok(qaService.getOrGenerateQuestions(documentId, userDetails.getUser()));
     }
 
-    /**
-     * Forces re-generation of questions, overwriting the existing cache.
-     * Use when the user explicitly clicks "Regenerate".
-     */
+    
     @PostMapping("/{documentId}/regenerate")
     public ResponseEntity<DocumentQAResponse> regenerateQuestions(
             @PathVariable UUID documentId,
@@ -44,10 +38,7 @@ public class QAController {
         return ResponseEntity.ok(qaService.regenerateQuestions(documentId, userDetails.getUser()));
     }
 
-    /**
-     * Fetches the answer to a specific question from the AI service.
-     * Answers are ephemeral — not stored in the database.
-     */
+    
     @PostMapping("/{documentId}/answer")
     public ResponseEntity<QAAnswerResponse> answerQuestion(
             @PathVariable UUID documentId,
@@ -59,9 +50,7 @@ public class QAController {
         );
     }
 
-    /**
-     * Deletes the cached Q&amp;A record so questions will be regenerated on next access.
-     */
+    
     @DeleteMapping("/{documentId}")
     public ResponseEntity<Void> deleteQA(
             @PathVariable UUID documentId,

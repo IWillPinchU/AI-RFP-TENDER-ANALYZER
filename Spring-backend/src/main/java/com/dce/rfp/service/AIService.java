@@ -19,9 +19,7 @@ public class AIService {
                 .build();
     }
 
-    /**
-     * Load a document into the AI service for indexing
-     */
+    
     public Map<String, Object> loadDocument(String filePath, String docId) {
         @SuppressWarnings("unchecked")
         Map<String, Object> response = restClient.post()
@@ -32,9 +30,7 @@ public class AIService {
         return response;
     }
 
-    /**
-     * Query a loaded document
-     */
+    
     public Map<String, Object> queryDocument(String docId, String query) {
         Map<String, Object> body = new java.util.HashMap<>();
         body.put("doc_id", docId);
@@ -48,10 +44,7 @@ public class AIService {
         return response;
     }
 
-        /**
-     * Calls the Python AI /proposal endpoint to generate a single proposal section.
-     * Returns a map containing "section" with "title" and "points" (list of strings).
-     */
+        
     public Map<String, Object> generateProposalSection(String docId, String title) {
         @SuppressWarnings("unchecked")
         Map<String, Object> response = restClient.post()
@@ -62,10 +55,7 @@ public class AIService {
         return response;
     }
 
-    /**
-     * Calls the Python /summarize endpoint for a given doc_id.
-     * Returns the full summary map: { overview: {...}, categories: {...} }
-     */
+    
     public Map<String, Object> summarizeDocument(String docId) {
         @SuppressWarnings("unchecked")
         Map<String, Object> response = restClient.post()
@@ -76,10 +66,7 @@ public class AIService {
         return response;
     }
 
-    /**
-     * Calls the Python /compare endpoint.
-     * Returns the full comparison map: { doc_id_a, doc_id_b, comparison: {...} }
-     */
+    
     public Map<String, Object> compareDocuments(String docIdA, String docIdB,
                                                 String docNameA, String docNameB,
                                                 String query) {
@@ -98,11 +85,7 @@ public class AIService {
         return response;
     }
 
-    /**
-     * Calls the Python /unload endpoint to remove a document's FAISS index
-     * from memory AND delete its persisted files from disk.
-     * Non-critical — if AI service is down, log and continue.
-     */
+    
     public void unloadDocument(String docId) {
         try {
             restClient.delete()
@@ -110,15 +93,12 @@ public class AIService {
                     .retrieve()
                     .toBodilessEntity();
         } catch (Exception e) {
-            // Non-critical — document is still deleted from DB and disk
+            
             System.err.println("Warning: Failed to unload AI index for doc " + docId + ": " + e.getMessage());
         }
     }
 
-    /**
-     * Calls the Python /generate-questions endpoint.
-     * Returns a map containing { "doc_id": ..., "questions": [...] }.
-     */
+    
     public Map<String, Object> generateQuestions(String docId) {
         @SuppressWarnings("unchecked")
         Map<String, Object> response = restClient.post()
@@ -129,9 +109,7 @@ public class AIService {
         return response;
     }
 
-    /**
-     * Check if AI service is running
-     */
+    
     public boolean isHealthy() {
         try {
             restClient.get()
