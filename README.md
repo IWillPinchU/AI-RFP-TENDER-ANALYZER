@@ -2,6 +2,10 @@
 
 A full-stack platform for analyzing government and corporate tender documents. Upload a PDF or DOCX, and the system handles everything — AI-powered chat, summaries, proposal drafts, document comparisons and an automated Q&A pipeline. Built for procurement teams and consultants who deal with a lot of tenders and don't have time to read everything twice.
 
+## Architecture
+
+![Architecture Diagram](png/arch.png)
+
 ---
 
 ## Tech Stack
