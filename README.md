@@ -72,31 +72,31 @@ RFP/
 You'll need three things running at the same time.
 
 ### 1. PostgreSQL
-Make sure a PostgreSQL instance is up. Create a database and update the credentials in `rfp/src/main/resources/application.properties`.
+Make sure a PostgreSQL instance is up. Create a database and update the credentials in `spring-backend/src/main/resources/application.properties`.
 
 ### 2. Spring Boot Backend
 ```bash
-cd rfp
+cd spring-backend
 ./mvnw spring-boot:run
 ```
 Runs on **http://localhost:8080**
 
 ### 3. Python AI Service
 ```bash
-cd rfpp
+cd python-backend
 pip install -r requirements.txt
-uvicorn api:app --port 8000 --reload
+uvicorn api:app --port 8000
 ```
 Runs on **http://localhost:8000**
 
-Make sure a `.env` file exists in `rfpp/` with:
+Make sure a `.env` file exists in `python-backend/` with:
 ```
 GROQ_API_KEY=your_key_here
 ```
 
 ### 4. Frontend
 ```bash
-cd client
+cd frontend
 npm install
 npm run dev
 ```
