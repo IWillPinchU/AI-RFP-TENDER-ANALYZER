@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "safe-install": "npx -y @gkiely/safe-install@0.1.33"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",
@@ -35,5 +36,7 @@
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.58.0",
     "vite": "^8.0.4"
-  }
+  },
+  "blockExoticSubDeps": true,
+  "trustedDependencies": []
 }

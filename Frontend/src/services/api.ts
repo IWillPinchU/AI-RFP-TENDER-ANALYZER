@@ -1,6 +1,6 @@
 
 
-const envApiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+const envApiUrl = import.meta.env.SPRING_API_URL || 'http://localhost:8080';
 const BASE_URL = envApiUrl.replace(/\/api\/?$/, ''); 
 const API_URL = `${BASE_URL}/api`;
 

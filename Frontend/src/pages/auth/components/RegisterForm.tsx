@@ -83,7 +83,7 @@ export function RegisterForm({
   }
 
   const handleGoogleLogin = () => {
-    const rawEnv = import.meta.env.VITE_API_URL || 'http:
+    const rawEnv = import.meta.env.SPRING_API_URL;
     const apiBase = rawEnv.replace(/\/api\/?$/, '');
     window.location.href = `${apiBase}/oauth2/authorization/google`;
   };

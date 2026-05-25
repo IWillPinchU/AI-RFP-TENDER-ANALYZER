@@ -61,7 +61,7 @@ export function LoginForm({
   };
 
   const handleGoogleLogin = () => {
-    const rawEnv = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+    const rawEnv = import.meta.env.SPRING_API_URL || 'http://localhost:8080';
     const apiBase = rawEnv.replace(/\/api\/?$/, '');
     window.location.href = `${apiBase}/oauth2/authorization/google`;
   };
